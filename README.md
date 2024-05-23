@@ -1,19 +1,19 @@
-## Installation ⚒️
+## Instalación ⚒️
 
 ```bash
-# For npm
+# Para npm
 npm install --legacy-peer-deps
 
-# For yarn
+# Para yarn
 yarn install
 ```
 
-Open [http://localhost:3000/](http://localhost:3000/) to check your development 🚀.
+Abrir en [http://localhost:3000/](http://localhost:3000/)  🚀.
 
 ```bash
-# For npm
+# Para npm
 npm run dev
 
-# For yarn
+# Para yarn
 yarn dev
 ```
