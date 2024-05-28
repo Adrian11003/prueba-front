@@ -5,6 +5,7 @@ import { forwardRef, useState, useEffect } from 'react'
 import { getDocentes, createDocentes } from 'api/docentes';
 import { getDniTipos } from 'api/dni';
 import Swal from 'sweetalert2'
+import Link from "next/link"
 
 // ** MUI Imports
 import Card from '@mui/material/Card'
@@ -133,7 +134,10 @@ const FormAddDocentes = () => {
           title: "Creación Exitosa!",
           text: "Docentes creado exitosamente",
           icon: "success"
-        })
+        }).then(() => {
+          // Redireccionar al listado de alumnos
+          window.location.href ="/Docentes";
+        });
       }
     } catch (error) {
       console.error('Error al crear el docente:', error);
@@ -209,9 +213,12 @@ const FormAddDocentes = () => {
           <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
             Registrar
           </Button>
+          <Link href="/Docentes">
           <Button size='large' color='secondary' variant='outlined'>
+          
             Cancelar
           </Button>
+          </Link>
         </CardActions>
       </form>
     </Card>

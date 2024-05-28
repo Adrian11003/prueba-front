@@ -15,16 +15,13 @@ const MUITable = () => {
       <Grid item xs={12}>
         <Typography variant='h5'>
           <Link href='https://mui.com/components/tables/' target='_blank'>
-            MUI Tables
+            Docentes
           </Link>
         </Typography>
-        <Typography variant='body2'>Tables display sets of data. They can be fully customized</Typography>
+        <Typography variant='body2'>Gestionar Docentes</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Card>
-          <CardHeader title='Customized Table' titleTypographyProps={{ variant: 'h6' }} />
           <DocentesTable/>
-        </Card>
       </Grid>
     </Grid>
   )

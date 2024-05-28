@@ -1,63 +1,147 @@
+'use client'
+
+import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2'
+import { getDocentes, deleteDocentes } from "/api/docentes"
+
+// MUI
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
+import { Table, TableBody,Box, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, CardHeader, Card, TextField, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import Link from "next/link"
 
+const DocentesTable = () => {
 
+  const [docentes, setDocentes] = useState([]);
 
-const users = [
-  { id: 1, name: 'John Doe', email: 'john@example.com' , phone:'454646'},
-  { id: 2, name: 'Jane Smith', email: 'jane@example.com',phone:'454646' },
-  { id: 3, name: 'Alice Johnson', email: 'alice@example.com',phone:'454646' },
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getDocentes();
+        setDocentes(data);
+      } catch (error) {
+        console.error('Error al obtener los datos de los docentes:', error);
+      }
+    };
 
-  // More users can be added here
-];
+    fetchData();
+  }, []);
+  const [searchTerm, setSearchTerm] = useState('');
 
-const UserTable = () => {
+  const handleDelete = async (id) => {
+    // Mostrar el SweetAlert2 de confirmación
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminarlo",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteDocentes(id);
+          const updateDocente = docentes.filter((docentes) => docentes.id !== id);
+          setDocentes(updateDocente);
+          Swal.fire({
+            title: "¡Eliminado!",
+            text: "Tu docente ha sido eliminado.",
+            icon: "success",
+          }).then(() => {
+            // Recargar la página después de mostrar la alerta de éxito
+            window.location.reload();
+          });
+        } catch (error) {
+          console.error("Error al eliminar el docente:", error);
 
-  const handleEdit = (userId) => {
-    // Implement edit functionality here
-    console.log("Edit user with ID:", userId);
+          // Mostrar SweetAlert2 de error si ocurre algún problema
+
+          Swal.fire({
+            title: "Error",
+            text: "Hubo un problema al eliminar el docente.",
+            icon: "error",
+          });
+        }
+      }
+    });
   };
 
-  const handleDelete = (userId) => {
-    // Implement delete functionality here
-    console.log("Delete user with ID:", userId);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
   };
+
+  const filteredDocentes = docentes.filter((docente) =>
+    docente.nombre_docente.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    docente.apellido_docente.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    docente.email_docente.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    docente.telefono_docente.includes(searchTerm) ||
+    String(docente.numero_dni).includes(searchTerm)
+  );
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Phone</TableCell>
-            <TableCell>Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {users.map((user) => (
-            <TableRow key={user.id}>
-              <TableCell>{user.id}</TableCell>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell> {user.phone}</TableCell>
-              <TableCell>
-                <IconButton onClick={() => handleEdit(user.id)} aria-label="edit">
-                  <EditIcon />
-                </IconButton>
-                <IconButton onClick={() => handleDelete(user.id)} aria-label="delete">
-                  <DeleteIcon />
-                </IconButton>
-              </TableCell>
+    <Card>
+      <CardHeader
+        title={
+          <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
+            <TextField
+              label="Buscar"
+              variant="outlined"
+              size="small"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              style={{ marginRight: 16 }}
+            />
+            <Link href="/Docentes/create/" passHref>
+              <Button variant="contained" color="primary">
+                Añadir Docente
+              </Button>
+            </Link>
+          </Box>
+        }
+      />
+      <TableContainer component={Paper}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Nombre</TableCell>
+              <TableCell>Apellido</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Telefono</TableCell>
+              <TableCell>Documento</TableCell>
+              <TableCell>Acción</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {filteredDocentes.map((docentes, index) => (
+              <TableRow key={index}>
+                <TableCell>{docentes.nombre_docente}</TableCell>
+                <TableCell>{docentes.apellido_docente}</TableCell>
+                <TableCell>{docentes.email_docente}</TableCell>
+                <TableCell>{docentes.telefono_docente}</TableCell>
+                <TableCell>{docentes.numero_dni}</TableCell>
+
+                <TableCell>
+
+                  <IconButton>
+                    <Link href="/Docentes/create/" passHref>
+                      <EditIcon />
+                    </Link>
+                  </IconButton>
+
+                  <IconButton onClick={() => handleDelete(docentes.docente_id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Card>
   );
 };
 
-export default UserTable;
+export default DocentesTable
