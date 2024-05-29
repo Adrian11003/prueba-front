@@ -52,7 +52,6 @@ const FormEditDocente = () => {
         const data = await getDocentesById(id);
         setFormData(data);
         console.log(data); // Verifica que los datos se impriman correctamente en la consola
-        setFormData(data);
       } catch (error) {
         console.error('Error al obtener el docente:', error);
       }
@@ -78,32 +77,52 @@ const FormEditDocente = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    const newValue = name === 'numero_dni' && value !== '' ? parseInt(value, 10) : value;
+
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: newValue,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-      const response = await updateDocentes(id,formData);
-
+      const { nombre_docente, apellido_docente, direccion_docente, email_docente, telefono_docente, numero_dni, dni_id } = formData;
+  
+      const formDataToUpdate = {
+        nombre_docente,
+        apellido_docente,
+        direccion_docente,
+        email_docente,
+        telefono_docente,
+        numero_dni,
+        dni_id
+      };
+  
+      // Realiza la solicitud de actualización
+      const response = await updateDocentes(id, formDataToUpdate);
+  
       if (response) {
         Swal.fire({
-          title: "Creación Exitosa!",
-          text: "Docente creado exitosamente",
+          title: "Actualización Exitosa!",
+          text: "Docente actualizado exitosamente",
           icon: "success"
         }).then(() => {
-          // Redireccionar al listado de alumnos
-          window.location.href ="/Docentes";
+          // Redirecciona al listado de docentes
+          router.push("/Docentes");
         });
       }
     } catch (error) {
-      console.error('Error al crear el docente:',  error.response ? error.response.data : error.message);
-
-      // Aquí puedes mostrar un mensaje de error al usuario
+      console.error('Error al actualizar el docente:', error.response ? error.response.data : error.message);
+      // Muestra un mensaje de error al usuario
+      Swal.fire({
+        title: "Error!",
+        text: "Hubo un error al actualizar el docente. Por favor, inténtalo de nuevo.",
+        icon: "error"
+      });
     }
   };
 
@@ -130,11 +149,14 @@ const FormEditDocente = () => {
                 <InputLabel id='Docentes-layouts-separator-select-label'>Tipo de Documento</InputLabel>
                 <Select
                   label='Tipo de Documento'
-                  defaultValue=''
                   id='form-layouts-separator-select'
                   labelId='form-layouts-separator-select-label'
-                  name="dni_id" value={formData.dni_id} onChange={handleChange} required
+                  name="dni_id"
+                  value={formData.dni_id || ''}
+                  onChange={handleChange}
+                  required
                 >
+                  <MenuItem value=''>Seleccionar tipo de documento</MenuItem>
                   {dniTipos.map((tipoDni) => (
                     <MenuItem key={tipoDni.dni_id} value={tipoDni.dni_id}>
                       {tipoDni.tipo_dni}
