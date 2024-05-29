@@ -16,27 +16,19 @@ import MenuItem from '@mui/material/MenuItem'
 import TextField from '@mui/material/TextField'
 import CardHeader from '@mui/material/CardHeader'
 import InputLabel from '@mui/material/InputLabel'
-import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 import FormControl from '@mui/material/FormControl'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import InputAdornment from '@mui/material/InputAdornment'
+
 import Select from '@mui/material/Select'
 
-// ** Third Party Imports
-import DatePicker from 'react-datepicker'
 
-// ** Icons Imports
-import EyeOutline from 'mdi-material-ui/EyeOutline'
-import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
+// const CustomInput = forwardRef((props, ref) => {
+//   return <TextField fullWidth {...props} inputRef={ref} label='Birth Date' autoComplete='off' />
+// })
 
-const CustomInput = forwardRef((props, ref) => {
-  return <TextField fullWidth {...props} inputRef={ref} label='Birth Date' autoComplete='off' />
-})
-
-const FormAddDocentes = () => {
+const FormEditDocente = () => {
   // ** States
   // const [language, setLanguage] = useState([])
   // const [date, setDate] = useState(null)
@@ -131,8 +123,8 @@ const FormAddDocentes = () => {
 
       if (response) {
         Swal.fire({
-          title: "Creación Exitosa!",
-          text: "Docente creado exitosamente",
+          title: "Edicióm Exitosa!",
+          text: "Docente modificado exitosamente",
           icon: "success"
         }).then(() => {
           // Redireccionar al listado de alumnos
@@ -140,7 +132,7 @@ const FormAddDocentes = () => {
         });
       }
     } catch (error) {
-      console.error('Error al crear el docente:', error);
+      console.error('Error al editar el docente:', error);
 
       // Aquí puedes mostrar un mensaje de error al usuario
     }
@@ -148,7 +140,7 @@ const FormAddDocentes = () => {
 
   return (
     <Card>
-      <CardHeader title='Registrar Docente' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='Modificar Docente' titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <form onSubmit={handleSubmit}>
         <CardContent>
@@ -225,4 +217,4 @@ const FormAddDocentes = () => {
   )
 }
 
-export default FormAddDocentes
+export default FormEditDocente

@@ -6,7 +6,7 @@ import { getDocentes, deleteDocentes } from "/api/docentes"
 
 // MUI
 import React from 'react';
-import { Table, TableBody,Box, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, CardHeader, Card, TextField, Button } from '@mui/material';
+import { Table, TableBody,Box, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, CardHeader, Card, TextField, Button, TablePagination } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Link from "next/link"
@@ -102,7 +102,7 @@ const DocentesTable = () => {
           </Box>
         }
       />
-      <TableContainer component={Paper}>
+      <TableContainer  component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -126,7 +126,7 @@ const DocentesTable = () => {
                 <TableCell>
 
                   <IconButton>
-                    <Link href="/Docentes/create/" passHref>
+                    <Link href={`/Docentes/edit/${docentes.docente_id}` }passHref>
                       <EditIcon />
                     </Link>
                   </IconButton>
