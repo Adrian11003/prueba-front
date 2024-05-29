@@ -6,6 +6,8 @@ import { getDocentesById, updateDocentes } from 'api/docentes';
 import { getDniTipos } from 'api/dni';
 import Swal from 'sweetalert2'
 import Link from "next/link"
+import Router from 'next/dist/server/router';
+import { useRouter } from 'next/router';
 
 // ** MUI Imports
 import Card from '@mui/material/Card'
@@ -47,7 +49,7 @@ const FormEditDocente = () => {
   useEffect(() => {
     const fetchDocente = async () => {
       try {
-        const data = await getDocentesById(doncente_id);
+        const data = await getDocentesById(id);
         setFormData(data);
         console.log(data); // Verifica que los datos se impriman correctamente en la consola
         setFormData(data);
@@ -86,14 +88,20 @@ const FormEditDocente = () => {
     e.preventDefault();
 
     try {
-      await updateDocentes(id, formData);
+      const response = await updateDocentes(id,formData);
 
-      // Puedes redirigir al usuario a la página de detalles del docente o a la lista de docentes
-
-      router.push(`/Docentes/detail/${id}`);
-
+      if (response) {
+        Swal.fire({
+          title: "Creación Exitosa!",
+          text: "Docente creado exitosamente",
+          icon: "success"
+        }).then(() => {
+          // Redireccionar al listado de alumnos
+          window.location.href ="/Docentes";
+        });
+      }
     } catch (error) {
-      console.error('Error al editar el docente:', error);
+      console.error('Error al crear el docente:',  error.response ? error.response.data : error.message);
 
       // Aquí puedes mostrar un mensaje de error al usuario
     }

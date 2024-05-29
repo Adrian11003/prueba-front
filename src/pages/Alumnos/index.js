@@ -9,7 +9,7 @@ import CardHeader from '@mui/material/CardHeader'
 import DocentesTable from 'src/views/tables/DocentesTable'
 
 
-const DTable = () => {
+const MUITable = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
@@ -27,4 +27,4 @@ const DTable = () => {
   )
 }
 
-export default DTable
+export default MUITable
