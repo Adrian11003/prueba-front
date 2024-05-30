@@ -126,7 +126,7 @@ const DocentesTable = () => {
                 <TableCell>
 
                   <IconButton>
-                    <Link href={`/Docentes/edit/${docentes.docente_id}` }passHref>
+                    <Link href={`/Docentes/${docentes.docente_id}` }passHref>
                       <EditIcon />
                     </Link>
                   </IconButton>

@@ -9,16 +9,16 @@ import CardHeader from '@mui/material/CardHeader'
 import DocentesTable from 'src/views/tables/DocentesTable'
 
 
-const DTable = () => {
+const MUITable = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Typography variant='h5'>
           <Link href='https://mui.com/components/tables/' target='_blank'>
-            Docentes
+            Alumnos
           </Link>
         </Typography>
-        <Typography variant='body2'>Gestionar Docentes</Typography>
+        <Typography variant='body2'>Gestionar Alumnos</Typography>
       </Grid>
       <Grid item xs={12}>
           <DocentesTable/>
@@ -27,4 +27,4 @@ const DTable = () => {
   )
 }
 
-export default DTable
+export default MUITable

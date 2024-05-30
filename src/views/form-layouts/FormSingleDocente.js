@@ -2,10 +2,12 @@
 
 // ** React Imports
 import { forwardRef, useState, useEffect } from 'react'
-import { getDocentes, createDocentes } from 'api/docentes';
+import { getDocentesById, updateDocentes } from 'api/docentes';
 import { getDniTipos } from 'api/dni';
 import Swal from 'sweetalert2'
 import Link from "next/link"
+import Router from 'next/dist/server/router';
+import { useRouter } from 'next/router';
 
 // ** MUI Imports
 import Card from '@mui/material/Card'
@@ -29,49 +31,8 @@ import Select from '@mui/material/Select'
 // })
 
 const FormEditDocente = () => {
-  // ** States
-  // const [language, setLanguage] = useState([])
-  // const [date, setDate] = useState(null)
-
-  // const [values, setValues] = useState({
-  //   password: '',
-  //   password2: '',
-  //   showPassword: false,
-  //   showPassword2: false
-  // })
-
-  // Handle Password
-  // const handlePasswordChange = prop => event => {
-  //   setValues({ ...values, [prop]: event.target.value })
-  // }
-
-  // const handleClickShowPassword = () => {
-  //   setValues({ ...values, showPassword: !values.showPassword })
-  // }
-
-  // const handleMouseDownPassword = event => {
-  //   event.preventDefault()
-  // }
-
-  // // Handle Confirm Password
-  // const handleConfirmChange = prop => event => {
-  //   setValues({ ...values, [prop]: event.target.value })
-  // }
-
-  // const handleClickShowConfirmPassword = () => {
-  //   setValues({ ...values, showPassword2: !values.showPassword2 })
-  // }
-
-  // const handleMouseDownConfirmPassword = event => {
-  //   event.preventDefault()
-  // }
-
-  // // Handle Select
-  // const handleSelectChange = event => {
-  //   setLanguage(event.target.value)
-  // }
-  const [docentes, setDocentes] = useState([]);
-  const [dniTipos, setDniTipos] = useState([]);
+  const router = useRouter();
+  const { id } = router.query;
 
   const [formData, setFormData] = useState({
     nombre_docente: '',
@@ -83,16 +44,27 @@ const FormEditDocente = () => {
     dni_id: '',
   });
 
+  const [dniTipos, setDniTipos] = useState([]);
+
   useEffect(() => {
-    const fetchDocentes = async () => {
+    const fetchDocente = async () => {
       try {
-        const data = await getDocentes();
-        setDocentes(data);
+        const data = await getDocentesById(id);
+        setFormData({
+          ...data,
+          dni_id: data.dni.dni_id,
+        });
       } catch (error) {
-        console.error('Error al obtener los docentes:', error);
+        console.error('Error al obtener el docente:', error);
       }
     };
 
+    if (id) {
+      fetchDocente();
+    }
+  }, [id]);
+
+  useEffect(() => {
     const fetchDniTipos = async () => {
       try {
         const data = await getDniTipos();
@@ -103,12 +75,13 @@ const FormEditDocente = () => {
     };
 
     fetchDniTipos();
-    fetchDocentes();
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const newValue = name === 'numero_dni' ? parseInt(value, 10) : name === 'dni_id' ? parseInt(value, 10) : value;
+
+    const newValue = name === 'numero_dni' && value !== '' ? parseInt(value, 10) : value;
+
     setFormData({
       ...formData,
       [name]: newValue,
@@ -117,24 +90,41 @@ const FormEditDocente = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-      const response = await createDocentes(formData);
-
+      const { nombre_docente, apellido_docente, direccion_docente, email_docente, telefono_docente, numero_dni, dni_id } = formData;
+  
+      const formDataToUpdate = {
+        nombre_docente,
+        apellido_docente,
+        direccion_docente,
+        email_docente,
+        telefono_docente,
+        numero_dni,
+        dni_id
+      };
+  
+      // Realiza la solicitud de actualización
+      const response = await updateDocentes(id, formDataToUpdate);
+  
       if (response) {
         Swal.fire({
-          title: "Edicióm Exitosa!",
-          text: "Docente modificado exitosamente",
+          title: "Actualización Exitosa!",
+          text: "Docente actualizado exitosamente",
           icon: "success"
         }).then(() => {
-          // Redireccionar al listado de alumnos
-          window.location.href ="/Docentes";
+          // Redirecciona al listado de docentes
+          router.push("/Docentes");
         });
       }
     } catch (error) {
-      console.error('Error al editar el docente:', error);
-
-      // Aquí puedes mostrar un mensaje de error al usuario
+      console.error('Error al actualizar el docente:', error.response ? error.response.data : error.message);
+      // Muestra un mensaje de error al usuario
+      Swal.fire({
+        title: "Error!",
+        text: "Hubo un error al actualizar el docente. Por favor, inténtalo de nuevo.",
+        icon: "error"
+      });
     }
   };
 
@@ -161,60 +151,48 @@ const FormEditDocente = () => {
                 <InputLabel id='Docentes-layouts-separator-select-label'>Tipo de Documento</InputLabel>
                 <Select
                   label='Tipo de Documento'
-                  defaultValue=''
                   id='form-layouts-separator-select'
                   labelId='form-layouts-separator-select-label'
-                  name="dni_id" value={formData.dni_id} onChange={handleChange} required
+                  name="dni_id"
+                  value={formData.dni_id || ''}
+                  onChange={handleChange}
+                  required
                 >
-                    {dniTipos.map((tipoDni) => (
+                  <MenuItem value=''>Seleccionar tipo de documento</MenuItem>
+                  {dniTipos.map((tipoDni) => (
                     <MenuItem key={tipoDni.dni_id} value={tipoDni.dni_id}>
                       {tipoDni.tipo_dni}
-
-                    </MenuItem>))}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Nro. Doc.' placeholder=''  name="numero_dni" value={formData.numero_dni} onChange={handleChange} required />
+              <TextField fullWidth label='Nro. Doc.' placeholder='' name="numero_dni" value={formData.numero_dni} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Nro. Telef.' placeholder='+51 123456879' name="telefono_docente" value={formData.telefono_docente} onChange={handleChange}  required />
+              <TextField fullWidth label='Nro. Telef.' placeholder='+51 123456879' name="telefono_docente" value={formData.telefono_docente} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth type='email' label='Email' placeholder='202010604@urp.edu.pe' name="email_docente" value={formData.email_docente} onChange={handleChange}  required />
+              <TextField fullWidth type='email' label='Email' placeholder='202010604@urp.edu.pe' name="email_docente" value={formData.email_docente} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={12}>
-              <TextField fullWidth label='Dirección' placeholder='Jr Mariano Campos 996' name="direccion_docente" value={formData.direccion_docente} onChange={handleChange} required/>
+              <TextField fullWidth label='Dirección' placeholder='Jr Mariano Campos 996' name="direccion_docente" value={formData.direccion_docente} onChange={handleChange} required />
             </Grid>
-            {/* <Grid item xs={12} sm={6}>
-              <DatePicker
-                selected={date}
-                showYearDropdown
-                showMonthDropdown
-                placeholderText='MM-DD-YYYY'
-                customInput={<CustomInput />}
-                id='form-layouts-separator-date'
-                onChange={date => setDate(date)}
-              />
-            </Grid> */}
-
           </Grid>
         </CardContent>
         <Divider sx={{ margin: 0 }} />
         <CardActions>
           <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
-            Registrar
+            Actualizar
           </Button>
-          <Link href="/Docentes" passHref>
-          <Button size='large' color='secondary' variant='outlined'>
-          
+          <Button size='large' color='secondary' variant='outlined' onClick={() => router.back()}>
             Cancelar
           </Button>
-          </Link>
         </CardActions>
       </form>
     </Card>
-  )
-}
+  );
+};
 
 export default FormEditDocente

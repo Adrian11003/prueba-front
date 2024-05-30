@@ -6,10 +6,10 @@ import Typography from '@mui/material/Typography'
 import CardHeader from '@mui/material/CardHeader'
 
 // ** Demo Components Imports
-import DocentesTable from 'src/views/tables/DocentesTable'
+import ApoderadosTable from 'src/views/tables/ApoderadosTable'
 
 
-const DTable = () => {
+const ApTable = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
@@ -18,13 +18,13 @@ const DTable = () => {
             Docentes
           </Link>
         </Typography>
-        <Typography variant='body2'>Gestionar Docentes</Typography>
+        <Typography variant='body2'>Gestionar Apoderados</Typography>
       </Grid>
       <Grid item xs={12}>
-          <DocentesTable/>
+          <ApoderadosTable/>
       </Grid>
     </Grid>
   )
 }
 
-export default DTable
+export default ApTable

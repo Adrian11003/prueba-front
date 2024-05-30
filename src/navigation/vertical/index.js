@@ -2,6 +2,7 @@
 import Login from 'mdi-material-ui/Login'
 import Table from 'mdi-material-ui/Table'
 import CubeOutline from 'mdi-material-ui/CubeOutline'
+import { AccountSchoolOutline,AccountChildOutline, ClipboardAccountOutline} from 'mdi-material-ui'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import FormatLetterCase from 'mdi-material-ui/FormatLetterCase'
 import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
@@ -26,14 +27,19 @@ const navigation = () => {
     //   sectionTitle: 'Pages'
     // },
     {
-      icon: CubeOutline,
-      title: 'Docentes',
-      path: '/Docentes'
-    },
-    {
-      icon: CubeOutline,
+      icon: AccountSchoolOutline,
       title: 'Alumnos',
       path: '/Alumnos'
+    },
+    {
+      icon: AccountChildOutline,
+      title: 'Apoderados',
+      path: '/Apoderados'
+    },
+    {
+      icon: AccountSchoolOutline,
+      title: 'Docentes',
+      path: '/Docentes'
     },
     // {
     //   title: 'Login',
