@@ -1,15 +1,17 @@
 // ** Icon imports
-import Login from 'mdi-material-ui/Login'
-import Table from 'mdi-material-ui/Table'
-import CubeOutline from 'mdi-material-ui/CubeOutline'
-import { AccountSchoolOutline,AccountChildOutline, ClipboardAccountOutline} from 'mdi-material-ui'
-import HomeOutline from 'mdi-material-ui/HomeOutline'
-import FormatLetterCase from 'mdi-material-ui/FormatLetterCase'
-import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
-import CreditCardOutline from 'mdi-material-ui/CreditCardOutline'
-import AccountPlusOutline from 'mdi-material-ui/AccountPlusOutline'
-import AlertCircleOutline from 'mdi-material-ui/AlertCircleOutline'
-import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
+// import Login from 'mdi-material-ui/Login'
+// import Table from 'mdi-material-ui/Table'
+// import CubeOutline from 'mdi-material-ui/CubeOutline'
+import { AccountSchoolOutline,AccountChildOutline, LibraryOutline, AccountTieOutline, } from 'mdi-material-ui'
+
+// import HomeOutline from 'mdi-material-ui/HomeOutline'
+// import FormatLetterCase from 'mdi-material-ui/FormatLetterCase'
+// import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
+// import CreditCardOutline from 'mdi-material-ui/CreditCardOutline'
+// import AccountPlusOutline from 'mdi-material-ui/AccountPlusOutline'
+// import AlertCircleOutline from 'mdi-material-ui/AlertCircleOutline'
+// import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
+
 
 const navigation = () => {
   return [
@@ -37,9 +39,14 @@ const navigation = () => {
       path: '/Apoderados'
     },
     {
-      icon: AccountSchoolOutline,
+      icon: AccountTieOutline,
       title: 'Docentes',
       path: '/Docentes'
+    },
+    {
+      icon: LibraryOutline,
+      title: 'Aulas',
+      path: '/Aulas'
     },
    
     // {
@@ -90,5 +97,7 @@ const navigation = () => {
     // }
   ]
 }
+
+// https://pictogrammers.com/library/mdi/category/places/
 
 export default navigation
