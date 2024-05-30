@@ -15,10 +15,10 @@ const MUITable = () => {
       <Grid item xs={12}>
         <Typography variant='h5'>
           <Link href='https://mui.com/components/tables/' target='_blank'>
-            Docentes
+            Alumnos
           </Link>
         </Typography>
-        <Typography variant='body2'>Gestionar Docentes</Typography>
+        <Typography variant='body2'>Gestionar Alumnos</Typography>
       </Grid>
       <Grid item xs={12}>
           <DocentesTable/>

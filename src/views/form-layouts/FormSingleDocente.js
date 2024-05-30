@@ -50,8 +50,10 @@ const FormEditDocente = () => {
     const fetchDocente = async () => {
       try {
         const data = await getDocentesById(id);
-        setFormData(data);
-        console.log(data); // Verifica que los datos se impriman correctamente en la consola
+        setFormData({
+          ...data,
+          dni_id: data.dni.dni_id,
+        });
       } catch (error) {
         console.error('Error al obtener el docente:', error);
       }
