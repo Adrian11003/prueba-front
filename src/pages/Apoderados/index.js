@@ -15,7 +15,7 @@ const ApTable = () => {
       <Grid item xs={12}>
         <Typography variant='h5'>
           <Link href='https://mui.com/components/tables/' target='_blank'>
-            Docentes
+            Apoderados
           </Link>
         </Typography>
         <Typography variant='body2'>Gestionar Apoderados</Typography>
