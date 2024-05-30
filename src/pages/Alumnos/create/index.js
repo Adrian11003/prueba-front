@@ -6,15 +6,16 @@ import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 
 // ** Demo Components Imports
 import FormDocentes from 'src/views/form-layouts/FormDocentes'
+import FormAddAlumnos from 'src/views/form-layouts/FormAlumnos'
 
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
 
-const LayoutDocente = () => {
+const LayoutAlumnos = () => {
   return (  
-          <FormDocentes/>
+          <FormAddAlumnos/>
   )
 }
 
-export default LayoutDocente
+export default LayoutAlumnos

@@ -7,6 +7,7 @@ import CardHeader from '@mui/material/CardHeader'
 
 // ** Demo Components Imports
 import DocentesTable from 'src/views/tables/DocentesTable'
+import AlumnosTable from 'src/views/tables/AlumnosTable'
 
 
 const MUITable = () => {
@@ -14,14 +15,12 @@ const MUITable = () => {
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Typography variant='h5'>
-          <Link href='https://mui.com/components/tables/' target='_blank'>
             Alumnos
-          </Link>
         </Typography>
         <Typography variant='body2'>Gestionar Alumnos</Typography>
       </Grid>
       <Grid item xs={12}>
-          <DocentesTable/>
+          <AlumnosTable/>
       </Grid>
     </Grid>
   )
