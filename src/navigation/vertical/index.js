@@ -43,6 +43,11 @@ const navigation = () => {
       title: 'Docentes',
       path: '/Docentes'
     },
+    {
+      icon: LibraryOutline,
+      title: 'Aulas',
+      path: '/Aulas'
+    },
    
     // {
     //   title: 'Login',

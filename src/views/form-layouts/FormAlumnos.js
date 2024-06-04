@@ -51,7 +51,7 @@ const FormAddAlumnos = () => {
     direccion_alumno: '',
     telefono_alumno: '',
     numero_dni: '',
-    dni_id,
+    dni_id: '',
     apoderado_id: '',
     aulas_id: '',
   });
