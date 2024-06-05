@@ -1,55 +1,46 @@
-'use client'
-
 // ** React Imports
-import { forwardRef, useState, useEffect } from 'react'
-import { getAlumnoById, updateAlumno } from "/api/alumnos"
+import { useState, useEffect } from 'react';
+import { getAlumnoById, updateAlumno } from "api/alumnos";
 import { getDniTipos } from 'api/dni';
 import { getApoderados } from 'api/apoderados';
 import { getAulas } from 'api/aulas';
-import Swal from 'sweetalert2'
-import Link from "next/link"
-import Router from 'next/dist/server/router';
+import Swal from 'sweetalert2';
+import Link from "next/link";
 import { useRouter } from 'next/router';
-
-// ** MUI Imports
-import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import MenuItem from '@mui/material/MenuItem'
-import TextField from '@mui/material/TextField'
-import CardHeader from '@mui/material/CardHeader'
-import InputLabel from '@mui/material/InputLabel'
-import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import FormControl from '@mui/material/FormControl'
-
-import Select from '@mui/material/Select'
-
-
-// const CustomInput = forwardRef((props, ref) => {
-//   return <TextField fullWidth {...props} inputRef={ref} label='Birth Date' autoComplete='off' />
-// })
+import {
+  Card,
+  Grid,
+  Button,
+  Divider,
+  MenuItem,
+  TextField,
+  CardHeader,
+  InputLabel,
+  Typography,
+  CardContent,
+  CardActions,
+  FormControl,
+  Select
+} from '@mui/material';
 
 const FormEditAlumno = () => {
   const router = useRouter();
   const { id } = router.query;
 
   const [formData, setFormData] = useState({
-    nombres_alumno: '',
-    apellidos_alumno: '',
-    direccion_alumno: '',
-    telefono_alumno: '',
-    numero_dni: '',
-    dni_id: '',
-    apoderado_id: '',
-    aulas_id: '',
+    nombres_alumno: null,
+    apellidos_alumno: null,
+    direccion_alumno: null,
+    telefono_alumno: null,
+    numero_dni: null,
+    dni_id: null,
+    apoderado_id: null,
+    aulas_id: null,
   });
 
   const [dniTipos, setDniTipos] = useState([]);
   const [apoderadoTipos, setApoderadoTipos] = useState([]);
-  const [aulasTipos, setAulasTipos] = useState([])
+  const [aulasTipos, setAulasTipos] = useState([]);
 
   useEffect(() => {
     const fetchAlumnos = async () => {
@@ -58,9 +49,8 @@ const FormEditAlumno = () => {
         setFormData({
           ...data,
           dni_id: data.dni.dni_id,
-          apoderado_id: data.apoderado_id,
-          aulas_id: data.aulas_id
-
+          apoderado_id: data.apoderado.apoderado_id,
+          aulas_id: data.aula.aulas_id
         });
       } catch (error) {
         console.error('Error al obtener el alumno:', error);
@@ -68,7 +58,7 @@ const FormEditAlumno = () => {
     };
 
     if (id) {
-        fetchAlumnos();
+      fetchAlumnos();
     }
   }, [id]);
 
@@ -83,22 +73,22 @@ const FormEditAlumno = () => {
     };
 
     const fetchApoderadoTipos = async () => {
-        try {
-            const data = await getApoderados();
-            setApoderadoTipos(data);
-        }catch(error){
-            console.error('Error al obtener los tipos de apoderados: ', error);
-        }
-    }
+      try {
+        const data = await getApoderados();
+        setApoderadoTipos(data);
+      } catch (error) {
+        console.error('Error al obtener los tipos de apoderados: ', error);
+      }
+    };
 
     const fetchAulasTipos = async () => {
-        try{
-            const data = await getAulas();
-            setAulasTipos(data);
-        }catch(error){
-            console.error('Error al obtener los tipos de aulas: ', error);
-        }
-    }
+      try {
+        const data = await getAulas();
+        setAulasTipos(data);
+      } catch (error) {
+        console.error('Error al obtener los tipos de aulas: ', error);
+      }
+    };
 
     fetchDniTipos();
     fetchApoderadoTipos();
@@ -118,10 +108,10 @@ const FormEditAlumno = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      const { nombres_alumno, apellidos_alumno, direccion_alumno, telefono_alumno, numero_dni, dni_id, apoderado_id,  aulas_id} = formData;
-  
+      const { nombres_alumno, apellidos_alumno, direccion_alumno, telefono_alumno, numero_dni, dni_id, apoderado_id, aulas_id } = formData;
+
       const formDataToUpdate = {
         nombres_alumno,
         apellidos_alumno,
@@ -132,10 +122,10 @@ const FormEditAlumno = () => {
         apoderado_id,
         aulas_id,
       };
-  
+
       // Realiza la solicitud de actualización
-      const response = await updateAlumnos(id, formDataToUpdate);
-  
+      const response = await updateAlumno(id, formDataToUpdate);
+
       if (response) {
         Swal.fire({
           title: "Actualización Exitosa!",
@@ -170,10 +160,10 @@ const FormEditAlumno = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth name='nombres_alumno' label='Nombres' placeholder='Dereck' value={formData.nombres_alumno} onChange={handleChange} required />
+              <TextField fullWidth name='nombres_alumno' label='Nombres' placeholder='Dereck' value={formData.nombres_alumno || ''} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Apellidos' placeholder='Muñoz' name="apellidos_alumno" value={formData.apellidos_alumno} onChange={handleChange} required />
+              <TextField fullWidth label='Apellidos' placeholder='Muñoz' name="apellidos_alumno" value={formData.apellidos_alumno || ''} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
@@ -183,9 +173,9 @@ const FormEditAlumno = () => {
                   defaultValue=''
                   id='form-layouts-separator-select'
                   labelId='form-layouts-separator-select-label'
-                  name="dni_id" value={formData.dni_id} onChange={handleChange} required
+                  name="dni_id" value={formData.dni_id || ''} onChange={handleChange} required
                 >
-                    {dniTipos.map((tipoDni) => (
+                  {dniTipos.map((tipoDni) => (
                     <MenuItem key={tipoDni.dni_id} value={tipoDni.dni_id}>
                       {tipoDni.tipo_dni}
 
@@ -201,9 +191,9 @@ const FormEditAlumno = () => {
                   defaultValue=''
                   id='form-layouts-separator-select'
                   labelId='form-layouts-separator-select-label'
-                  name="aulas_id" value={formData.aulas_id} onChange={handleChange} required
+                  name="aulas_id" value={formData.aulas_id || ''} onChange={handleChange} required
                 >
-                    {aulasTipos.map((tipoAula) => (
+                  {aulasTipos.map((tipoAula) => (
                     <MenuItem key={tipoAula.aulas_id} value={tipoAula.aulas_id}>
                       {tipoAula.piso}
 
@@ -219,9 +209,9 @@ const FormEditAlumno = () => {
                   defaultValue=''
                   id='form-layouts-separator-select'
                   labelId='form-layouts-separator-select-label'
-                  name="apoderado_id" value={formData.apoderado_id} onChange={handleChange} required
+                  name="apoderado_id" value={formData.apoderado_id || ''} onChange={handleChange} required
                 >
-                    {apoderadoTipos.map((tipoApoderado) => (
+                  {apoderadoTipos.map((tipoApoderado) => (
                     <MenuItem key={tipoApoderado.apoderado_id} value={tipoApoderado.apoderado_id}>
                       {tipoApoderado.nombres_apoderado}
 
@@ -230,26 +220,14 @@ const FormEditAlumno = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Nro. Doc.' placeholder=''  name="numero_dni" value={formData.numero_dni} onChange={handleChange} required />
+              <TextField fullWidth label='Nro. Doc.' placeholder='' name="numero_dni" value={formData.numero_dni || ''} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Nro. Telef.' placeholder='+51 123456879' name="telefono_alumno" value={formData.telefono_alumno} onChange={handleChange}  required />
+              <TextField fullWidth label='Nro. Telef.' placeholder='+51 123456879' name="telefono_alumno" value={formData.telefono_alumno || ''} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={12}>
-              <TextField fullWidth label='Dirección' placeholder='Jr Mariano Campos 996' name="direccion_alumno" value={formData.direccion_alumno} onChange={handleChange} required/>
+              <TextField fullWidth label='Dirección' placeholder='Jr Mariano Campos 996' name="direccion_alumno" value={formData.direccion_alumno || ''} onChange={handleChange} required />
             </Grid>
-            {/* <Grid item xs={12} sm={6}>
-              <DatePicker
-                selected={date}
-                showYearDropdown
-                showMonthDropdown
-                placeholderText='MM-DD-YYYY'
-                customInput={<CustomInput />}
-                id='form-layouts-separator-date'
-                onChange={date => setDate(date)}
-              />
-            </Grid> */}
-
           </Grid>
         </CardContent>
         <Divider sx={{ margin: 0 }} />
@@ -258,15 +236,14 @@ const FormEditAlumno = () => {
             Actualizar
           </Button>
           <Link href="/Alumnos" passHref>
-          <Button size='large' color='secondary' variant='outlined'>
-          
-            Cancelar
-          </Button>
+            <Button size='large' color='secondary' variant='outlined'>
+              Cancelar
+            </Button>
           </Link>
         </CardActions>
       </form>
     </Card>
-  )
+  );
 };
 
-export default FormEditAlumno
+export default FormEditAlumno;
