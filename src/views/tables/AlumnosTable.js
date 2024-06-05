@@ -72,7 +72,7 @@ const AlumnosTable = () => {
         alumnos.apellidos_alumno.toLowerCase().includes(searchTerm.toLowerCase()) ||
         alumnos.telefono_alumno.toLowerCase().includes(searchTerm.toLowerCase()) ||
         String(alumnos.numero_dni).includes(searchTerm) ||
-        String(alumnos.aulas_id).includes(searchTerm)
+        String(alumnos.aula.numero_aula).includes(searchTerm)
     );
 
     return (
@@ -104,7 +104,7 @@ const AlumnosTable = () => {
                   <TableCell>Apellido</TableCell>
                   <TableCell>Telefono</TableCell>
                   <TableCell>Documento</TableCell>
-                  <TableCell>Direccion</TableCell>
+                  <TableCell>Aula</TableCell>
                   <TableCell>Acción</TableCell>
                 </TableRow>
               </TableHead>
@@ -115,7 +115,7 @@ const AlumnosTable = () => {
                     <TableCell>{alumnos.apellidos_alumno}</TableCell>
                     <TableCell>{alumnos.telefono_alumno}</TableCell>
                     <TableCell>{alumnos.numero_dni}</TableCell>
-                    <TableCell>{alumnos.direccion_alumno}</TableCell>
+                    <TableCell>{alumnos.aula.numero_aula}</TableCell>
     
                     <TableCell>
     
