@@ -179,7 +179,7 @@ const FormAddAlumnos = () => {
                 >
                     {aulasTipos.map((tipoAula) => (
                     <MenuItem key={tipoAula.aulas_id} value={tipoAula.aulas_id}>
-                      {tipoAula.piso}
+                      {tipoAula.numero_aula}
 
                     </MenuItem>))}
                 </Select>
