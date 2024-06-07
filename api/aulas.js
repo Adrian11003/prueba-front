@@ -36,7 +36,7 @@ export const getAulaById = async (aulas_id) => {
     }
 }
 
-export const updateAlumno = async (aulas_id, updatedAulas) => {
+export const updateAula = async (aulas_id, updatedAulas) => {
     try {
         const response = await api.put(`https://api-vn-dola.onrender.com/aulas/${aulas_id}`, updatedAulas);
 
