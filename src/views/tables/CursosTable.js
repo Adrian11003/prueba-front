@@ -120,9 +120,9 @@ const CursosTable = () => {
                 <TableCell>
 
                   <IconButton>
-                    {/* <Link href={`/Aulas/${aulas.aulas_id}`} passHref>
+                    <Link href={`/Cursos/${cursos.cursos_id}`} passHref>
                       <EditIcon />
-                    </Link> */}
+                    </Link>
                   </IconButton>
 
                   <IconButton onClick={() => handleDelete(cursos.cursos_id)}>
