@@ -92,7 +92,7 @@ const CursosTable = () => {
               onChange={handleSearchChange}
               style={{ marginRight: 16 }}
             />
-            <Link href="/Aulas/create/" passHref>
+            <Link href="/Cursos/create/" passHref>
               <Button variant="contained" color="primary">
                 Añadir Curso
               </Button>
