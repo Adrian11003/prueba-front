@@ -48,6 +48,12 @@ const navigation = () => {
       title: 'Aulas',
       path: '/Aulas'
     },
+    {
+      icon: LibraryOutline,
+      title: 'Cursos',
+      path: '/Cursos'
+    }
+
    
     // {
     //   title: 'Login',
