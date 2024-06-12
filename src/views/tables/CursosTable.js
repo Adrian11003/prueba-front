@@ -76,7 +76,7 @@ const CursosTable = () => {
   const filteredCursos = cursos.filter((cursos) =>
     cursos.nombre_cursos.toLowerCase().includes(searchTerm.toLowerCase()) ||
     cursos.docente.nombre_docente.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    cursos.aula.numero_aula.toLowerCase().includes(searchTerm.toLowerCase())
+    cursos.aula.grado.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -115,7 +115,7 @@ const CursosTable = () => {
               <TableRow key={index}>
                 <TableCell>{cursos.nombre_cursos}</TableCell>
                 <TableCell>{cursos.docente.nombre_docente}</TableCell>
-                <TableCell>{cursos.aula.numero_aula}</TableCell>
+                <TableCell>{cursos.aula.grado}</TableCell>
 
                 <TableCell>
 

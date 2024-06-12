@@ -32,7 +32,7 @@ const FormEditAula = () => {
     const { id } = router.query;
 
     const [formData, setFormData] = useState({
-        numero_aula: '',
+        grado: '',
         capacidad: '',
         piso: '',
         seccion_id: '',
@@ -84,10 +84,10 @@ const FormEditAula = () => {
         e.preventDefault();
 
         try{
-            const { numero_aula, capacidad, piso, seccion_id } = formData;
+            const { grado, capacidad, piso, seccion_id } = formData;
 
             const formDataToUpdate = {
-                numero_aula,
+                grado,
                 capacidad: parseInt(capacidad),
                 piso,
                 seccion_id
@@ -129,7 +129,7 @@ const FormEditAula = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField fullWidth name='numero_aula' label='Número' placeholder='B402' value={formData.numero_aula} onChange={handleChange} required />
+                  <TextField fullWidth name='grado' label='Grado' placeholder='B402' value={formData.grado} onChange={handleChange} required />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField fullWidth label='Piso' placeholder='2' name="piso" value={formData.piso} onChange={handleChange} required />

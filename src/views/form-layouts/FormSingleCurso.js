@@ -153,7 +153,7 @@ const FormEditCurso = () => {
                 >
                   {aulaTipos.map((tipoAula) => (
                     <MenuItem key={tipoAula.aulas_id} value={tipoAula.aulas_id}>
-                      {tipoAula.numero_aula}
+                      {tipoAula.grado}
                     </MenuItem>))}
                 </Select>
               </FormControl>

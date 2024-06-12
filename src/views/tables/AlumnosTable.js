@@ -72,7 +72,7 @@ const AlumnosTable = () => {
         alumnos.apellidos_alumno.toLowerCase().includes(searchTerm.toLowerCase()) ||
         alumnos.telefono_alumno.toLowerCase().includes(searchTerm.toLowerCase()) ||
         String(alumnos.numero_dni).includes(searchTerm) ||
-        String(alumnos.aula.numero_aula).includes(searchTerm)
+        String(alumnos.aula.grado).includes(searchTerm)
     );
 
     return (
@@ -115,7 +115,7 @@ const AlumnosTable = () => {
                     <TableCell>{alumnos.apellidos_alumno}</TableCell>
                     <TableCell>{alumnos.telefono_alumno}</TableCell>
                     <TableCell>{alumnos.numero_dni}</TableCell>
-                    <TableCell>{alumnos.aula.numero_aula}</TableCell>
+                    <TableCell>{alumnos.aula.grado}</TableCell>
     
                     <TableCell>
     

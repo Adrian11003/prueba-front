@@ -74,7 +74,7 @@ const AulasTable = () => {
   };
 
   const filteredAulas = aulas.filter((aulas) =>
-    aulas.numero_aula.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    aulas.grado.toLowerCase().includes(searchTerm.toLowerCase()) ||
     aulas.capacidad.toLowerCase().includes(searchTerm.toLowerCase()) ||
     aulas.piso.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -104,7 +104,7 @@ const AulasTable = () => {
         <Table aria-label="simple table">
           <TableHead >
             <TableRow >
-              <TableCell>Número</TableCell>
+              <TableCell>Grado</TableCell>
               <TableCell>Capacidad</TableCell>
               <TableCell>Piso</TableCell>
               <TableCell>Acción</TableCell>
@@ -113,7 +113,7 @@ const AulasTable = () => {
           <TableBody >
             {filteredAulas.map((aulas, index) => (
               <TableRow key={index}>
-                <TableCell>{aulas.numero_aula}</TableCell>
+                <TableCell>{aulas.grado}</TableCell>
                 <TableCell>{aulas.capacidad}</TableCell>
                 <TableCell>{aulas.piso}</TableCell>
 
