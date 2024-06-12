@@ -52,6 +52,11 @@ const navigation = () => {
       icon: LibraryOutline,
       title: 'Cursos',
       path: '/Cursos'
+    },
+    {
+      icon: LibraryOutline,
+      title: 'Matricula',
+      path: '/Matricula'
     }
 
    
