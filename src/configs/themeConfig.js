@@ -3,6 +3,7 @@ const themeConfig = {
   templateName: 'Admin' /* App Name */,
   mode: 'light' /* light | dark */,
   contentWidth: 'boxed' /* full | boxed */,
+  templateNameLogin: 'Virgen de la Navitidad',
   // ** Routing Configs
   routingLoader: true /* true | false */,
   // ** Navigation (Menu) Configs
@@ -11,6 +12,7 @@ const themeConfig = {
   // ** Other Configs
   responsiveFontSizes: true /* true | false */,
   disableRipple: false /* true | false */
+
 }
 
 export default themeConfig
