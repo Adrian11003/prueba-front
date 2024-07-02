@@ -70,11 +70,10 @@ const ApoderadosTable = () => {
   };
 
   const filteredApoderados = apoderados.filter((apoderado) =>
-    apoderado.nombres_apoderado.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    apoderado.apellidos_apoderado.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    apoderado.email_apoderado.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    apoderado.telefono_apoderado.includes(searchTerm) ||
-    String(apoderados.numero_dni).includes(searchTerm)
+    apoderado.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    apoderado.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    apoderado.numero.includes(searchTerm) ||
+    String(apoderados.numero_documento).includes(searchTerm)
   );
 
   return (
@@ -104,7 +103,6 @@ const ApoderadosTable = () => {
             <TableRow>
               <TableCell>Nombre</TableCell>
               <TableCell>Apellido</TableCell>
-              <TableCell>Email</TableCell>
               <TableCell>Telefono</TableCell>
               <TableCell>Documento</TableCell>
               <TableCell>Acción</TableCell>
@@ -113,11 +111,10 @@ const ApoderadosTable = () => {
           <TableBody>
             {filteredApoderados.map((apoderados, index) => (
               <TableRow key={index}>
-                <TableCell>{apoderados.nombres_apoderado}</TableCell>
-                <TableCell>{apoderados.apellidos_apoderado}</TableCell>
-                <TableCell>{apoderados.email_apoderado}</TableCell>
-                <TableCell>{apoderados.telefono_apoderado}</TableCell>
-                <TableCell>{apoderados.numero_dni}</TableCell>
+                <TableCell>{apoderados.nombre}</TableCell>
+                <TableCell>{apoderados.apellido}</TableCell>
+                <TableCell>{apoderados.numero}</TableCell>
+                <TableCell>{apoderados.numero_documento}</TableCell>
 
                 <TableCell>
 

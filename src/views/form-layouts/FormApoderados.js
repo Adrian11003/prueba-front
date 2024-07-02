@@ -82,13 +82,12 @@ const FormAddApoderados = () => {
   const [dniTipos, setDniTipos] = useState([]);
 
   const [formData, setFormData] = useState({
-    nombres_apoderado: '',
-    apellidos_apoderado: '',
-    direccion_apoderado: '',
-    email_apoderado: '',
-    telefono_apoderado: '',
-    numero_dni: '',
-    dni_id: '',
+    nombre: '',
+    apellido: '',
+    direccion: '',
+    numero: '',
+    numero_documento: '',
+    documento_id: '',
   });
 
   useEffect(() => {
@@ -159,10 +158,10 @@ const FormAddApoderados = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth name='nombres_apoderado' label='Nombres' placeholder='Dereck' value={formData.nombres_apoderado} onChange={handleChange} required />
+              <TextField fullWidth name='nombre' label='Nombres' placeholder='Dereck' value={formData.nombre} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Apellidos' placeholder='Muñoz' name="apellidos_apoderado" value={formData.apellidos_apoderado} onChange={handleChange} required />
+              <TextField fullWidth label='Apellido' placeholder='Muñoz' name="apellido" value={formData.apellido} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
@@ -172,27 +171,24 @@ const FormAddApoderados = () => {
                   defaultValue=''
                   id='form-layouts-separator-select'
                   labelId='form-layouts-separator-select-label'
-                  name="dni_id" value={formData.dni_id} onChange={handleChange} required
+                  name="documento_id" value={formData.documento_id} onChange={handleChange} required
                 >
                     {dniTipos.map((tipoDni) => (
-                    <MenuItem key={tipoDni.dni_id} value={tipoDni.dni_id}>
-                      {tipoDni.tipo_dni}
+                    <MenuItem key={tipoDni.documento_id} value={tipoDni.documento_id}>
+                      {tipoDni.type}
 
                     </MenuItem>))}
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Nro. Doc.' placeholder=''  name="numero_dni" value={formData.numero_dni} onChange={handleChange} required />
+              <TextField fullWidth label='Nro. Doc.' placeholder=''  name="numero_documento" value={formData.numero_documento} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Nro. Telef.' placeholder='+51 123456879' name="telefono_apoderado" value={formData.telefono_apoderado} onChange={handleChange}  required />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth type='email' label='Email' placeholder='202010604@urp.edu.pe' name="email_apoderado" value={formData.email_apoderado} onChange={handleChange}  required />
+              <TextField fullWidth label='Nro. Telef.' placeholder='+51 123456879' name="numero" value={formData.numero} onChange={handleChange}  required />
             </Grid>
             <Grid item xs={12} sm={12}>
-              <TextField fullWidth label='Dirección' placeholder='Jr Mariano Campos 996' name="direccion_apoderado" value={formData.direccion_apoderado} onChange={handleChange} required/>
+              <TextField fullWidth label='Dirección' placeholder='Jr Mariano Campos 996' name="direccion" value={formData.direccion} onChange={handleChange} required/>
             </Grid>
             {/* <Grid item xs={12} sm={6}>
               <DatePicker

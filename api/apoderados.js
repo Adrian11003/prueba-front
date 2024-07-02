@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://api-vn-dola.onrender.com'
+    baseURL: 'https://tp2024-2.onrender.com'
 })
 
 export const getApoderados = async () => {
     try{
-        const response = await api.get('https://api-vn-dola.onrender.com/apoderado');
+        const response = await api.get('https://tp2024-2.onrender.com/apoderado');
         
         return response.data;
     } catch (error) {
@@ -17,7 +17,7 @@ export const getApoderados = async () => {
 
 export const createApoderados = async (apoderados) => {
     try{
-        const response = await api.post('https://api-vn-dola.onrender.com/apoderado', apoderados)
+        const response = await api.post('https://tp2024-2.onrender.com/apoderado', apoderados)
 
         return response.data
     } catch (error) {
@@ -27,7 +27,7 @@ export const createApoderados = async (apoderados) => {
 
 export const getApoderadoById = async (apoderado_id) => {
     try {
-        const response = await api.get(`https://api-vn-dola.onrender.com/apoderado/${apoderado_id}`);
+        const response = await api.get(`https://tp2024-2.onrender.com/apoderado/${apoderado_id}`);
 
         return response.data;
     } catch (error) {
@@ -38,7 +38,7 @@ export const getApoderadoById = async (apoderado_id) => {
 
 export const updateApoderado = async (apoderado_id, updatedApoderado) => {
     try {
-        const response = await api.put(`https://api-vn-dola.onrender.com/apoderado/${apoderado_id}`, updatedApoderado);
+        const response = await api.put(`https://tp2024-2.onrender.com/apoderado/${apoderado_id}`, updatedApoderado);
 
         return response.data;
     } catch (error) {
@@ -57,7 +57,7 @@ export const deleteApoderado = async (apoderado_id) => {
     }
 
     try {
-        const response = await api.delete(`https://api-vn-dola.onrender.com/apoderado/${apoderado_id}`);
+        const response = await api.delete(`https://tp2024-2.onrender.com/apoderado/${apoderado_id}`);
 
         return response.data;
     } catch (error) {
