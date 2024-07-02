@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://api-vn-dola.onrender.com'
+    baseURL: 'https://tp2024-2.onrender.com'
 })
 
 export const getCursos = async () => {
     try {
-        const response = await api.get('https://api-vn-dola.onrender.com/cursos');
+        const response = await api.get('https://tp2024-2.onrender.com/cursos');
         
         return response.data;
     } catch (error) {
@@ -17,7 +17,7 @@ export const getCursos = async () => {
 
 export const createCursos = async (cursos) => {
     try {
-        const response = await api.post('https://api-vn-dola.onrender.com/cursos', cursos)
+        const response = await api.post('https://tp2024-2.onrender.com/cursos', cursos)
 
         return response.data
     } catch (error) {
@@ -27,7 +27,7 @@ export const createCursos = async (cursos) => {
 
 export const getCursosById = async (cursos_id) => {
     try {
-        const response = await api.get(`https://api-vn-dola.onrender.com/cursos/${cursos_id}`);
+        const response = await api.get(`https://tp2024-2.onrender.com/cursos/${cursos_id}`);
 
         return response.data;
     } catch (error) {
@@ -38,7 +38,7 @@ export const getCursosById = async (cursos_id) => {
 
 export const updateCurso = async (cursos_id, updatedCursos) => {
     try {
-        const response = await api.put(`https://api-vn-dola.onrender.com/cursos/${cursos_id}`, updatedCursos);
+        const response = await api.put(`https://tp2024-2.onrender.com/cursos/${cursos_id}`, updatedCursos);
 
         return response.data;
     } catch (error) {
@@ -57,7 +57,7 @@ export const deleteCursos = async (cursos_id) => {
     }
 
     try {
-        const response = await api.delete(`https://api-vn-dola.onrender.com/cursos/${cursos_id}`);
+        const response = await api.delete(`https://tp2024-2.onrender.com/cursos/${cursos_id}`);
 
         return response.data;
     } catch (error) {

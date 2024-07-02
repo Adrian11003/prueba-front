@@ -20,6 +20,7 @@ const navigation = () => {
       icon: HomeOutline,
       path: '/'
     },
+    
     // {
     //   title: 'Account Settings',
     //   icon: AccountCogOutline,
@@ -50,6 +51,11 @@ const navigation = () => {
     },
     {
       icon: LibraryOutline,
+      title: 'Grados',
+      path: '/Grados'
+    },
+    {
+      icon: LibraryOutline,
       title: 'Cursos',
       path: '/Cursos'
     },
@@ -58,6 +64,7 @@ const navigation = () => {
       title: 'Matricula',
       path: '/Matricula'
     },
+
     // {
     //   title: 'Login',
     //   icon: Login,

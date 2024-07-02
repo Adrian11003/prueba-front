@@ -2,7 +2,7 @@
 
 // ** React Imports
 import { forwardRef, useState, useEffect } from 'react'
-import { getCursos, createCursos } from "/api/cursos"
+import { getgrados, creategrados } from "/api/grados"
 import { getAulas } from 'api/aulas';
 import { getDocentes } from 'api/docentes';
 
@@ -27,9 +27,9 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
 
-const FormAddCurso = () => {
+const FormAddGrado = () => {
 
-  const [cursos, setCursos] = useState([]);
+  const [grados, setGrados] = useState([]);
 
 
   const [formData, setFormData] = useState({
@@ -37,10 +37,10 @@ const FormAddCurso = () => {
   });
 
   useEffect(() => {
-    const fetchCursos = async () => {
+    const fetchGrados = async () => {
       try {
-        const data = await getCursos();
-        setCursos(data);
+        const data = await getgrados();
+        setGrados(data);
       } catch (error) {
         console.error('Error al obtener los cursos:', error);
       }
@@ -50,7 +50,7 @@ const FormAddCurso = () => {
 
 
 
-    fetchCursos();
+    fetchGrados();
   }, []);
 
   const handleChange = (e) => {
@@ -67,7 +67,7 @@ const FormAddCurso = () => {
     e.preventDefault();
 
     try {
-      const response = await createCursos(formData);
+      const response = await creategrados(formData);
 
       if (response) {
         Swal.fire({
@@ -76,7 +76,7 @@ const FormAddCurso = () => {
           icon: "success"
         }).then(() => {
           // Redireccionar al listado de alumnos
-          window.location.href = "/Cursos";
+          window.location.href = "/Grados";
         });
       }
     } catch (error) {
@@ -88,7 +88,7 @@ const FormAddCurso = () => {
 
   return (
     <Card>
-      <CardHeader title='Registrar Curso' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='Registrar Grado' titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <form onSubmit={handleSubmit}>
         <CardContent>
@@ -99,7 +99,7 @@ const FormAddCurso = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12}>
-              <TextField fullWidth name='nombre' label='Nombre' placeholder='Comunicación' value={formData.nombre} onChange={handleChange} required />
+              <TextField fullWidth name='nombre' label='Nombre' placeholder='1ro dePrimaria' value={formData.nombre} onChange={handleChange} required />
             </Grid>
             
             {/* <Grid item xs={12} sm={6}>
@@ -121,7 +121,7 @@ const FormAddCurso = () => {
           <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
             Registrar
           </Button>
-          <Link href="/Cursos" passHref>
+          <Link href="/Grados" passHref>
             <Button size='large' color='secondary' variant='outlined'>
 
               Cancelar
@@ -133,4 +133,4 @@ const FormAddCurso = () => {
   )
 }
 
-export default FormAddCurso
+export default FormAddGrado

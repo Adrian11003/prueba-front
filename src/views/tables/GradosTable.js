@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2'
-import { getCursos, deleteCursos } from "api/cursos"
+import { getgrados, deletegrados } from "api/grados"
 
 // MUI
 import React from 'react';
@@ -11,15 +11,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Link from "next/link"
 
-const CursosTable = () => {
+const GradosTable = () => {
 
-  const [cursos, setCursos] = useState([]);
+  const [grados, setGrados] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getCursos();
-        setCursos(data);
+        const data = await getgrados();
+        setGrados(data);
       } catch (error) {
         console.error('Error al obtener los datos de los cursos:', error);
       }
@@ -43,23 +43,23 @@ const CursosTable = () => {
         try {
           await deleteCursos(id);
           const updateCurso = cursos.filter((cursos) => cursos.id !== id);
-          setCursos(updateCurso);
+          setGrados(updateCurso);
           Swal.fire({
             title: "¡Eliminado!",
-            text: "Tu aula ha sido eliminada.",
+            text: "Tu grado ha sido eliminado.",
             icon: "success",
           }).then(() => {
             // Recargar la página después de mostrar la alerta de éxito
             window.location.reload();
           });
         } catch (error) {
-          console.error("Error al eliminar el aula:", error);
+          console.error("Error al eliminar el grado:", error);
 
           // Mostrar SweetAlert2 de error si ocurre algún problema
 
           Swal.fire({
             title: "Error",
-            text: "Hubo un problema al eliminar el aula.",
+            text: "Hubo un problema al eliminar el grado.",
             icon: "error",
           });
         }
@@ -73,8 +73,8 @@ const CursosTable = () => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredCursos = cursos.filter((cursos) =>
-    cursos.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredGrados = grados.filter((grados) =>
+    grados.nombre.toLowerCase().includes(searchTerm.toLowerCase())
 
   // ||
   //   cursos.docente.nombre_docente.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -94,9 +94,9 @@ const CursosTable = () => {
               onChange={handleSearchChange}
               style={{ marginRight: 16 }}
             />
-            <Link href="/Cursos/create/" passHref>
+            <Link href="/Grados/create/" passHref>
               <Button variant="contained" color="primary">
-                Añadir Curso
+                Añadir Grado
               </Button>
             </Link>
           </Box>
@@ -110,19 +110,19 @@ const CursosTable = () => {
             </TableRow>
           </TableHead>
           <TableBody >
-            {filteredCursos.map((cursos, index) => (
+            {filteredGrados.map((grados, index) => (
               <TableRow key={index}>
-                <TableCell>{cursos.nombre}</TableCell>
+                <TableCell>{grados.nombre}</TableCell>
 
                 <TableCell>
 
                   <IconButton>
-                    <Link href={`/Cursos/${cursos.curso_id}`} passHref>
+                    <Link href={`/Grados/${grados.grado_id}`} passHref>
                       <EditIcon />
                     </Link>
                   </IconButton>
 
-                  <IconButton onClick={() => handleDelete(cursos.curso_id)}>
+                  <IconButton onClick={() => handleDelete(grados.grado_id)}>
                     <DeleteIcon />
                   </IconButton>
 
@@ -136,4 +136,4 @@ const CursosTable = () => {
   );
 };
 
-export default CursosTable
+export default GradosTable
