@@ -74,11 +74,11 @@ const DocentesTable = () => {
   };
 
   const filteredDocentes = docentes.filter((docente) =>
-    docente.nombre_docente.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    docente.apellido_docente.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    docente.email_docente.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    docente.telefono_docente.includes(searchTerm) ||
-    String(docente.numero_dni).includes(searchTerm)
+    docente.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    docente.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    docente.direccion.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    docente.telefono.includes(searchTerm) ||
+    String(docente.numero_documento).includes(searchTerm)
   );
 
   return (
@@ -108,7 +108,7 @@ const DocentesTable = () => {
             <TableRow>
               <TableCell>Nombre</TableCell>
               <TableCell>Apellido</TableCell>
-              <TableCell>Email</TableCell>
+              <TableCell>Dirección</TableCell>
               <TableCell>Telefono</TableCell>
               <TableCell>Documento</TableCell>
               <TableCell>Acción</TableCell>
@@ -117,11 +117,11 @@ const DocentesTable = () => {
           <TableBody>
             {filteredDocentes.map((docentes, index) => (
               <TableRow key={index}>
-                <TableCell>{docentes.nombre_docente}</TableCell>
-                <TableCell>{docentes.apellido_docente}</TableCell>
-                <TableCell>{docentes.email_docente}</TableCell>
-                <TableCell>{docentes.telefono_docente}</TableCell>
-                <TableCell>{docentes.numero_dni}</TableCell>
+                <TableCell>{docentes.nombre}</TableCell>
+                <TableCell>{docentes.apellido}</TableCell>
+                <TableCell>{docentes.direccion}</TableCell>
+                <TableCell>{docentes.telefono}</TableCell>
+                <TableCell>{docentes.numero_documento}</TableCell>
 
                 <TableCell>
 
