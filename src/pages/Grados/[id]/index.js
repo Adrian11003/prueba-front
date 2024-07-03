@@ -2,12 +2,12 @@
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
-import FormEditCurso from 'src/views/form-layouts/FormSingleCurso'
+import FormEditGrado from 'src/views/form-layouts/FormSingleGrado'
 
-const LayoutSingleCurso = () => {
+const LayoutSingleGrado = () => {
     return (  
-            <FormEditCurso/>
+            <FormEditGrado/>
     )
   }
   
-  export default LayoutSingleCurso
+  export default LayoutSingleGrado

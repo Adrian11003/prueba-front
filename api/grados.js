@@ -36,7 +36,7 @@ export const getgradosById = async (grado_id) => {
     }
 }
 
-export const updateCurso = async (grado_id, updatedgrados) => {
+export const updateGrado = async (grado_id, updatedgrados) => {
     try {
         const response = await api.put(`https://tp2024-2.onrender.com/grado/${grado_id}`, updatedgrados);
 

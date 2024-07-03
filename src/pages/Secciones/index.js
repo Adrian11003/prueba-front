@@ -4,7 +4,7 @@ import Link from '@mui/material/Link'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import CardHeader from '@mui/material/CardHeader'
-import GradosTable from 'src/views/tables/GradosTable'
+import SeccionTable from 'src/views/tables/SeccionTable'
 
 
 const GrTable = () => {
@@ -12,12 +12,12 @@ const GrTable = () => {
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Typography variant='h5' color="#9155FD">
-            Grados
+            Secciones
         </Typography>
-        <Typography variant='body2'>Gestionar Grados</Typography>
+        <Typography variant='body2'>Gestionar Secciones</Typography>
       </Grid>
       <Grid item xs={12}>
-          <GradosTable/>
+          <SeccionTable/>
       </Grid>
     </Grid>
   )

@@ -1,7 +1,7 @@
 'use client'
 
 // ** React Imports
-import { getCursosById, updateCurso} from 'api/cursos'
+import { getgradosById,updateGrado} from 'api/grados'
 
 // ** MUI Imports
 import { useRouter } from 'next/router';
@@ -24,7 +24,7 @@ import Select from '@mui/material/Select'
 import { NewspaperVariantMultiple } from 'mdi-material-ui';
 import { useEffect, useState } from 'react'
 
-const FormEditCurso = () => {
+const FormEditGrado = () => {
     const router = useRouter();
     const { id } = router.query;
 
@@ -32,13 +32,11 @@ const FormEditCurso = () => {
         nombre: '',
     })
 
-    const [docenteTipos, setDocenteTipos] = useState([]);
-    const [aulaTipos, setAulasTipos] = useState([]);
     
     useEffect(() => {
-        const fetchCursos = async () => {
+        const fetchGrados = async () => {
             try{
-                const data = await getCursosById(id);
+                const data = await getgradosById(id);
                 setFormData({
                     ...data,
                 })
@@ -48,7 +46,7 @@ const FormEditCurso = () => {
         };
 
         if(id){
-            fetchCursos();
+            fetchGrados();
         }
     }, [id])
     
@@ -71,7 +69,7 @@ const FormEditCurso = () => {
                 nombre
             };
 
-            const response = await updateCurso(id, formDataToUpdate);
+            const response = await updateGrado(id, formDataToUpdate);
 
             if(response){
                 Swal.fire({
@@ -80,7 +78,7 @@ const FormEditCurso = () => {
                     icon: "success"
                   }).then(() => {
                     // Redirecciona al listado de docentes
-                    router.push("/Cursos");
+                    router.push("/Grados");
                   });
             }
         } catch (error){
@@ -88,7 +86,7 @@ const FormEditCurso = () => {
             
             Swal.fire({
                 title: "Error!",
-                text: "Hubo un error al actualizar el curso. Por favor, inténtalo de nuevo.",
+                text: "Hubo un error al actualizar el grado. Por favor, inténtalo de nuevo.",
                 icon: "error"
               });
 
@@ -97,7 +95,7 @@ const FormEditCurso = () => {
 
     return (
       <Card>
-      <CardHeader title='Actualizar Curso' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='Actualizar Grado' titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <form onSubmit={handleSubmit}>
         <CardContent>
@@ -130,7 +128,7 @@ const FormEditCurso = () => {
           <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
             Actualizar
           </Button>
-          <Link href="/Cursos" passHref>
+          <Link href="/Grados" passHref>
             <Button size='large' color='secondary' variant='outlined'>
 
               Cancelar
@@ -142,4 +140,4 @@ const FormEditCurso = () => {
       )
 }
 
-export default FormEditCurso
+export default FormEditGrado
