@@ -67,8 +67,8 @@ const navigation = () => {
  
     {
       icon: iconos.LibraryOutline,
-      title: 'Aulas',
-      path: '/Aulas'
+      title: 'Malla',
+      path: '/Malla'
     },
 
     // {

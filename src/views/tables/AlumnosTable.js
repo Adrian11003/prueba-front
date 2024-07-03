@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2'
-import { getAlumnos, deleteAlumno } from "/api/alumnos"
+import { getEstudiantes, deleteEstudiante } from "/api/alumnos"
 
 // MUI
 import React from 'react';
@@ -13,12 +13,12 @@ import Link from "next/link"
 
 const AlumnosTable = () => {
 
-    const [alumnos, setAlumnos] = useState([]);
+    const [estudiante, setAlumnos] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try{
-                const data = await getAlumnos()
+                const data = await getEstudiantes()
                 setAlumnos(data);
             }catch(error){
                 console.log('Error al obtener los datos de los alumnos',error);
@@ -40,9 +40,9 @@ const AlumnosTable = () => {
           }).then(async (result) => {
             if(result.isConfirmed){
                 try{
-                    await deleteAlumno(id);
-                    const updateAlumno = alumnos.filter((alumnos) => alumnos.id !== id);
-                    setAlumnos(updateAlumno);
+                    await deleteEstudiante(id);
+                    const updateEstudiante = estudiante.filter((alumnos) => estudiante.id !== id);
+                    setAlumnos(updateEstudiante);
                     Swal.fire({
                         title: "¡Eliminado!",
                         text: "Tu alumno ha sido eliminado.",
@@ -67,12 +67,13 @@ const AlumnosTable = () => {
         setSearchTerm(event.target.value);
       };
 
-      const filteredAlumnos = alumnos.filter((alumnos) =>
-        alumnos.nombres_alumno.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        alumnos.apellidos_alumno.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        alumnos.telefono_alumno.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        String(alumnos.numero_dni).includes(searchTerm) ||
-        String(alumnos.aula.grado).includes(searchTerm)
+      const filteredAlumnos = estudiante.filter((estudiante) =>
+        estudiante.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        estudiante.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        String(estudiante.numero_documento).includes(searchTerm) ||
+        estudiante.seccion.grado.nombre.toLowerCase().includes(searchTerm) ||
+        String(estudiante.seccion.nombre).includes(searchTerm) ||
+        String(estudiante.seccion.periodo.año).includes(searchTerm) 
     );
 
     return (
@@ -102,30 +103,32 @@ const AlumnosTable = () => {
                 <TableRow>
                   <TableCell>Nombre</TableCell>
                   <TableCell>Apellido</TableCell>
-                  <TableCell>Telefono</TableCell>
                   <TableCell>Documento</TableCell>
-                  <TableCell>Aula</TableCell>
+                  <TableCell>Grado</TableCell>
+                  <TableCell>seccion</TableCell>
+                  <TableCell>Periodo</TableCell>
                   <TableCell>Acción</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredAlumnos.map((alumnos, index) => (
+                {filteredAlumnos.map((estudiante, index) => (
                   <TableRow key={index}>
-                    <TableCell>{alumnos.nombres_alumno}</TableCell>
-                    <TableCell>{alumnos.apellidos_alumno}</TableCell>
-                    <TableCell>{alumnos.telefono_alumno}</TableCell>
-                    <TableCell>{alumnos.numero_dni}</TableCell>
-                    <TableCell>{alumnos.aula.grado}</TableCell>
+                    <TableCell>{estudiante.nombre}</TableCell>
+                    <TableCell>{estudiante.apellido}</TableCell>
+                    <TableCell>{estudiante.numero_documento}</TableCell>
+                    <TableCell>{estudiante.seccion.grado.nombre}</TableCell>
+                    <TableCell>{estudiante.seccion.nombre}</TableCell>
+                    <TableCell>{estudiante.seccion.periodo.año}</TableCell>
     
                     <TableCell>
     
                       <IconButton>
-                        <Link href={`/Alumnos/${alumnos.alumno_id}` }passHref>
+                        <Link href={`/Alumnos/${estudiante.estudiante_id}` }passHref>
                           <EditIcon />
                         </Link>
                       </IconButton>
     
-                      <IconButton onClick={() => handleDelete(alumnos.alumno_id)}>
+                      <IconButton onClick={() => handleDelete(estudiante.estudiante_id)}>
                         <DeleteIcon />
                       </IconButton>
                     </TableCell>

@@ -1,9 +1,9 @@
 // ** React Imports
 import { useState, useEffect } from 'react';
-import { getAlumnoById, updateAlumno } from "api/alumnos";
+import { getEstudianteById, updateEstudiante } from "api/alumnos";
 import { getDniTipos } from 'api/dni';
 import { getApoderados } from 'api/apoderados';
-import { getAulas } from 'api/aulas';
+import { getSecciones } from 'api/seccion';
 import Swal from 'sweetalert2';
 import Link from "next/link";
 import { useRouter } from 'next/router';
@@ -28,29 +28,28 @@ const FormEditAlumno = () => {
   const { id } = router.query;
 
   const [formData, setFormData] = useState({
-    nombres_alumno: null,
-    apellidos_alumno: null,
-    direccion_alumno: null,
-    telefono_alumno: null,
-    numero_dni: null,
-    dni_id: null,
-    apoderado_id: null,
-    aulas_id: null,
+    nombre: '',
+    apellido: '',
+    direccion: '',
+    numero_documento: '',
+    documento_id: '',
+    apoderado_id: '',
+    seccion_id: '',
   });
 
   const [dniTipos, setDniTipos] = useState([]);
   const [apoderadoTipos, setApoderadoTipos] = useState([]);
-  const [aulasTipos, setAulasTipos] = useState([]);
+  const [seccionTipos, setseccionTipos] = useState([]);
 
   useEffect(() => {
     const fetchAlumnos = async () => {
       try {
-        const data = await getAlumnoById(id);
+        const data = await getEstudianteById(id);
         setFormData({
           ...data,
-          dni_id: data.dni.dni_id,
+          documento_id: data.documento.documento_id,
           apoderado_id: data.apoderado.apoderado_id,
-          aulas_id: data.aula.aulas_id
+          seccion_id: data.seccion.seccion_id
         });
       } catch (error) {
         console.error('Error al obtener el alumno:', error);
@@ -81,10 +80,10 @@ const FormEditAlumno = () => {
       }
     };
 
-    const fetchAulasTipos = async () => {
+    const fetchseccionTipos = async () => {
       try {
-        const data = await getAulas();
-        setAulasTipos(data);
+        const data = await getSecciones();
+        setseccionTipos(data);
       } catch (error) {
         console.error('Error al obtener los tipos de aulas: ', error);
       }
@@ -92,13 +91,13 @@ const FormEditAlumno = () => {
 
     fetchDniTipos();
     fetchApoderadoTipos();
-    fetchAulasTipos();
+    fetchseccionTipos();
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    const newValue = name === 'numero_dni' && value !== '' ? parseInt(value, 10) : value;
+    const newValue = name === 'numero_documento' && value !== '' ? parseInt(value, 10) : value;
 
     setFormData({
       ...formData,
@@ -110,21 +109,20 @@ const FormEditAlumno = () => {
     e.preventDefault();
 
     try {
-      const { nombres_alumno, apellidos_alumno, direccion_alumno, telefono_alumno, numero_dni, dni_id, apoderado_id, aulas_id } = formData;
+      const { nombre, apellido, direccion,  numero_documento, documento_id, apoderado_id, seccion_id } = formData;
 
       const formDataToUpdate = {
-        nombres_alumno,
-        apellidos_alumno,
-        direccion_alumno,
-        telefono_alumno,
-        numero_dni,
-        dni_id,
+        nombre,
+        apellido,
+        direccion,
+        numero_documento,
+        documento_id,
         apoderado_id,
-        aulas_id,
+        seccion_id,
       };
 
       // Realiza la solicitud de actualización
-      const response = await updateAlumno(id, formDataToUpdate);
+      const response = await updateEstudiante(id, formDataToUpdate);
 
       if (response) {
         Swal.fire({
@@ -138,6 +136,7 @@ const FormEditAlumno = () => {
       }
     } catch (error) {
       console.error('Error al actualizar el alumno:', error.response ? error.response.data : error.message);
+
       // Muestra un mensaje de error al usuario
       Swal.fire({
         title: "Error!",
@@ -146,6 +145,8 @@ const FormEditAlumno = () => {
       });
     }
   };
+  const currentYear = new Date().getFullYear().toString();
+  const filteredSeccionTipos = seccionTipos.filter(seccion => seccion.periodo?.año === currentYear);
 
   return (
     <Card>
@@ -160,10 +161,10 @@ const FormEditAlumno = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth name='nombres_alumno' label='Nombres' placeholder='Dereck' value={formData.nombres_alumno || ''} onChange={handleChange} required />
+              <TextField fullWidth name='nombre' label='Nombres' placeholder='Dereck' value={formData.nombre || ''} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Apellidos' placeholder='Muñoz' name="apellidos_alumno" value={formData.apellidos_alumno || ''} onChange={handleChange} required />
+              <TextField fullWidth label='Apellidos' placeholder='Muñoz' name="apellido" value={formData.apellido || ''} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
@@ -173,11 +174,11 @@ const FormEditAlumno = () => {
                   defaultValue=''
                   id='form-layouts-separator-select'
                   labelId='form-layouts-separator-select-label'
-                  name="dni_id" value={formData.dni_id || ''} onChange={handleChange} required
+                  name="documento_id" value={formData.documento_id || ''} onChange={handleChange} required
                 >
                   {dniTipos.map((tipoDni) => (
-                    <MenuItem key={tipoDni.dni_id} value={tipoDni.dni_id}>
-                      {tipoDni.tipo_dni}
+                    <MenuItem key={tipoDni.documento_id} value={tipoDni.documento_id}>
+                      {tipoDni.type}
 
                     </MenuItem>))}
                 </Select>
@@ -185,19 +186,19 @@ const FormEditAlumno = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
-                <InputLabel id='Docentes-layouts-separator-select-label'>Tipo de Aulas</InputLabel>
+                <InputLabel id='Docentes-layouts-separator-select-label'>Salón</InputLabel>
                 <Select
-                  label='Tipo de Aula'
+                  label='Salon'
                   defaultValue=''
-                  id='form-layouts-separator-select'
-                  labelId='form-layouts-separator-select-label'
-                  name="aulas_id" value={formData.aulas_id || ''} onChange={handleChange} required
+                  id='seccion-select'
+                  labelId='seccion-label'
+                  name='seccion_id' value={formData.seccion_id} onChange={handleChange} required
                 >
-                  {aulasTipos.map((tipoAula) => (
-                    <MenuItem key={tipoAula.aulas_id} value={tipoAula.aulas_id}>
-                      {tipoAula.grado}
-
-                    </MenuItem>))}
+                  {filteredSeccionTipos.map((tipoSeccion) => (
+                    <MenuItem key={tipoSeccion.seccion_id} value={tipoSeccion.seccion_id}>
+                      {`${tipoSeccion.nombre} - ${tipoSeccion.grado?.nombre || 'N/A'} - ${tipoSeccion.periodo?.año}`}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -213,20 +214,17 @@ const FormEditAlumno = () => {
                 >
                   {apoderadoTipos.map((tipoApoderado) => (
                     <MenuItem key={tipoApoderado.apoderado_id} value={tipoApoderado.apoderado_id}>
-                      {tipoApoderado.nombres_apoderado}
+                      {tipoApoderado.nombre}
 
                     </MenuItem>))}
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Nro. Doc.' placeholder='' name="numero_dni" value={formData.numero_dni || ''} onChange={handleChange} required />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Nro. Telef.' placeholder='+51 123456879' name="telefono_alumno" value={formData.telefono_alumno || ''} onChange={handleChange} required />
+              <TextField fullWidth label='Nro. Doc.' placeholder='' name="numero_documento" value={formData.numero_documento || ''} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={12}>
-              <TextField fullWidth label='Dirección' placeholder='Jr Mariano Campos 996' name="direccion_alumno" value={formData.direccion_alumno || ''} onChange={handleChange} required />
+              <TextField fullWidth label='Dirección' placeholder='Jr Mariano Campos 996' name="direccion" value={formData.direccion || ''} onChange={handleChange} required />
             </Grid>
           </Grid>
         </CardContent>

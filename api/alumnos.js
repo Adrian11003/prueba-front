@@ -1,67 +1,67 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://api-vn-dola.onrender.com'
+    baseURL: 'https://tp2024-2.onrender.com'
 })
 
-export const getAlumnos = async () => {
+export const getEstudiantes = async () => {
     try {
-        const response = await api.get('https://api-vn-dola.onrender.com/alumnos');
+        const response = await api.get('https://tp2024-2.onrender.com/estudiante');
         
         return response.data;
     } catch (error) {
-        console.error('Error al ver alumnos');
+        console.error('Error al ver estudiante');
         throw error;
     }
 };
 
-export const createAlumnos = async (alumnos) => {
+export const createEstudiante = async (estudiante) => {
     try {
-        const response = await api.post('https://api-vn-dola.onrender.com/alumnos', alumnos)
+        const response = await api.post('https://tp2024-2.onrender.com/estudiante', estudiante)
 
         return response.data
     } catch (error) {
-        console.error('Error al crear alumnos')
+        console.error('Error al crear estudiante')
     }
 }
 
-export const getAlumnoById = async (alumnos_id) => {
+export const getEstudianteById = async (estudiante_id) => {
     try {
-        const response = await api.get(`https://api-vn-dola.onrender.com/alumnos/${alumnos_id}`);
+        const response = await api.get(`https://tp2024-2.onrender.com/estudiante/${estudiante_id}`);
 
         return response.data;
     } catch (error) {
-        console.error(`Error al obtener el alumno con ID ${alumnos_id}`, error);
+        console.error(`Error al obtener el alumno con ID ${estudiante_id}`, error);
         throw error;
     }
 }
 
-export const updateAlumno = async (alumnos_id, updatedAlumno) => {
+export const updateEstudiante = async (estudiante_id, updatedEstudiante) => {
     try {
-        const response = await api.put(`https://api-vn-dola.onrender.com/alumnos/${alumnos_id}`, updatedAlumno);
+        const response = await api.put(`https://tp2024-2.onrender.com/estudiante/${estudiante_id}`, updatedEstudiante);
 
         return response.data;
     } catch (error) {
-        console.error(`Error al actualizar el alumno con ID ${alumnos_id}`, error);
+        console.error(`Error al actualizar el alumno con ID ${estudiante_id}`, error);
         throw error;
     }
 };
 
-export const deleteAlumno = async (alumnos_id) => {
-    const alumnoId = Number(alumnos_id); // Convertir id a número
+export const deleteEstudiante = async (estudiante_id) => {
+    const estudianteId = Number(estudiante_id); // Convertir id a número
 
-    console.log("id recibido: ", alumnos_id);
+    console.log("id recibido: ", estudiante_id);
 
-    if (isNaN(alumnoId)) {
+    if (isNaN(estudianteId)) {
         throw new Error('ID inválido');
     }
 
     try {
-        const response = await api.delete(`https://api-vn-dola.onrender.com/alumnos/${alumnos_id}`);
+        const response = await api.delete(`https://tp2024-2.onrender.com/estudiante/${estudiante_id}`);
 
         return response.data;
     } catch (error) {
-        console.error(`Error al eliminar el alumno con ID ${alumnos_id}`, error);
+        console.error(`Error al eliminar el alumno con ID ${estudiante_id}`, error);
         throw error;
     }
 };

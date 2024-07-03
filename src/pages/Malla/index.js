@@ -7,14 +7,14 @@ import CardHeader from '@mui/material/CardHeader'
 import AulasTable from 'src/views/tables/AulasTable'
 
 
-const AuTable = () => {
+const MaTable = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Typography variant='h5' color="#9155FD">
-            Aulas
+            Malla  (Cursos-Grado)
         </Typography>
-        <Typography variant='body2'>Gestionar Aulas</Typography>
+        <Typography variant='body2'>Gestionar Malla</Typography>
       </Grid>
       <Grid item xs={12}>
           <AulasTable/>
@@ -23,4 +23,4 @@ const AuTable = () => {
   )
 }
 
-export default AuTable
+export default MaTable
