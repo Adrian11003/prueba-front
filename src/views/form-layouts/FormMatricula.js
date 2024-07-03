@@ -106,6 +106,7 @@ const FormAddMatricula = () => {
       }
     } catch (error) {
       console.error('Error al crear la matricula:', error);
+      
       // Mostrar mensaje de error al usuario si es necesario
     }
   };

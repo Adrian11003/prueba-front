@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2'
-import { getAulas, deleteAulas } from "api/aulas"
+import { getCursosGrado, deleteCursosGrado } from "api/cursosGrado"
 
 // MUI
 import React from 'react';
@@ -11,17 +11,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Link from "next/link"
 
-const AulasTable = () => {
+const CursoGradoTable = () => {
 
-  const [aulas, setAulas] = useState([]);
+  const [cursoGrado, setCursoGrado] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getAulas();
-        setAulas(data);
+        const data = await getCursosGrado();
+        setCursoGrado(data);
       } catch (error) {
-        console.error('Error al obtener los datos de las aulas:', error);
+        console.error('Error al obtener los datos de las cursoGrado:', error);
       }
     };
 
@@ -41,9 +41,9 @@ const AulasTable = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await deleteAulas(id);
-          const updateAula = aulas.filter((aulas) => aulas.id !== id);
-          setAulas(updateAula);
+          await deleteCursosGrado(id);
+          const updateAula = cursoGrado.filter((cursoGrado) => cursoGrado.id !== id);
+          setCursoGrado(updateAula);
           Swal.fire({
             title: "¡Eliminado!",
             text: "Tu aula ha sido eliminada.",
@@ -73,10 +73,10 @@ const AulasTable = () => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredAulas = aulas.filter((aulas) =>
-    aulas.grado.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    aulas.capacidad.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    aulas.piso.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredcursoGrado = cursoGrado.filter((cursoGrado) =>
+    cursoGrado.grado.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    cursoGrado.capacidad.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    cursoGrado.piso.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -92,9 +92,9 @@ const AulasTable = () => {
               onChange={handleSearchChange}
               style={{ marginRight: 16 }}
             />
-            <Link href="/Aulas/create/" passHref>
+            <Link href="/cursoGrado/create/" passHref>
               <Button variant="contained" color="primary">
-                Añadir Aula
+                Dar un curso a un horario
               </Button>
             </Link>
           </Box>
@@ -104,28 +104,28 @@ const AulasTable = () => {
         <Table aria-label="simple table">
           <TableHead >
             <TableRow >
+              <TableCell>Curso</TableCell>
               <TableCell>Grado</TableCell>
-              <TableCell>Capacidad</TableCell>
-              <TableCell>Piso</TableCell>
+              <TableCell>Periodo</TableCell>
               <TableCell>Acción</TableCell>
             </TableRow>
           </TableHead>
           <TableBody >
-            {filteredAulas.map((aulas, index) => (
+            {filteredcursoGrado.map((cursoGrado, index) => (
               <TableRow key={index}>
-                <TableCell>{aulas.grado}</TableCell>
-                <TableCell>{aulas.capacidad}</TableCell>
-                <TableCell>{aulas.piso}</TableCell>
+                <TableCell>{cursoGrado.grado.nombre}</TableCell>
+                <TableCell>{cursoGrado.curso.nombre}</TableCell>
+                <TableCell>{cursoGrado.periodo.año}</TableCell>
 
                 <TableCell>
 
                   <IconButton>
-                    <Link href={`/Aulas/${aulas.aulas_id}`} passHref>
+                    <Link href={`/Malla/${cursoGrado.cursoGrado_id}`} passHref>
                       <EditIcon />
                     </Link>
                   </IconButton>
 
-                  <IconButton onClick={() => handleDelete(aulas.aulas_id)}>
+                  <IconButton onClick={() => handleDelete(cursoGrado.cursoGrado_id)}>
                     <DeleteIcon />
                   </IconButton>
 
@@ -139,4 +139,4 @@ const AulasTable = () => {
   );
 };
 
-export default AulasTable
+export default CursoGradoTable
