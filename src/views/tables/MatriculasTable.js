@@ -76,11 +76,7 @@ const MatriculasTable = () => {
     };
   
     const filteredMatriculas = matriculas.filter((matriculas) =>
-      matriculas.periodo_academico.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      matriculas.numero_matricula.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      matriculas.observaciones.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      matriculas.alumno.nombres_alumno.includes(searchTerm) ||
-      matriculas.apoderado.nombres_apoderado.includes(searchTerm)
+      matriculas.estado.toLowerCase().includes(searchTerm.toLowerCase())
     );
   
     return (
@@ -108,23 +104,18 @@ const MatriculasTable = () => {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Periodo Academico</TableCell>
-                <TableCell>Numero Matricula</TableCell>
-                <TableCell>Observaciones</TableCell>
                 <TableCell>Alumno</TableCell>
-                <TableCell>Apoderado</TableCell>
+                <TableCell>Grado-Seccion</TableCell>
+                <TableCell>Estado</TableCell>
                 <TableCell>Acción</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {filteredMatriculas.map((matriculas, index) => (
                 <TableRow key={index}>
-                  <TableCell>{matriculas.periodo_academico}</TableCell>
-                  <TableCell>{matriculas.numero_matricula}</TableCell>
-                  <TableCell>{matriculas.observaciones}</TableCell>
-                  <TableCell>{matriculas.alumno.nombres_alumno}</TableCell>
-                  <TableCell>{matriculas.apoderado.nombres_apoderado}</TableCell>
-  
+                  <TableCell>{`${matriculas.estudiante.nombre} ${matriculas.estudiante.apellido}`}</TableCell>
+                  <TableCell>{`${matriculas.seccion.grado.nombre} - ${matriculas.seccion.nombre}`} </TableCell>
+                  <TableCell>{matriculas.estado}</TableCell>
                   <TableCell>
   
                     <IconButton>

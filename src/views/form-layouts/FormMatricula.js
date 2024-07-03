@@ -1,99 +1,91 @@
-'use client'
-
 // ** React Imports
-import { forwardRef, useState, useEffect } from 'react'
-import { getMatriculas, createMatriculas } from "api/matricula"
-import { getAlumnos } from 'api/alumnos';
-import { getApoderados } from 'api/apoderados';
-import {  getSeccion } from 'api/seccion';
-import Swal from 'sweetalert2'
-import Link from "next/link"
+import { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
+import Link from 'next/link';
 
 // ** MUI Imports
-import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import MenuItem from '@mui/material/MenuItem'
-import TextField from '@mui/material/TextField'
-import CardHeader from '@mui/material/CardHeader'
-import InputLabel from '@mui/material/InputLabel'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import FormControl from '@mui/material/FormControl'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import InputAdornment from '@mui/material/InputAdornment'
-import Select from '@mui/material/Select'
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
+import CardHeader from '@mui/material/CardHeader';
+import InputLabel from '@mui/material/InputLabel';
+import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+// ** API Imports (importa tus funciones de API aquí)
+import { getMatriculas, createMatriculas } from 'api/matricula';
+import { getEstudiantes } from 'api/alumnos';
+import { getSecciones } from 'api/seccion';
 
 const FormAddMatricula = () => {
+  const [matriculas, setMatriculas] = useState([]);
+  const [estudianteTipos, setEstudianteTipos] = useState([]);
+  const [seccionTipos, setSeccionTipos] = useState([]);
 
-    const [matriculas, setMatriculas] = useState([])
-    const [alumnoTipos, setAlumnoTipos] = useState([])
-    const [apoderadoTipos, setApoderadoTipos] = useState([]);
-    const [seccionTipos, setSeccionTipos] = useState([])
-
-    
   const [formData, setFormData] = useState({
-    periodo_academico: '',
-    numero_matricula: '',
-    observaciones: '',
-    alumno_id: '',
-    apoderado_id: '',
+    estado: '',
+    estudiante_id: '',
     seccion_id: '',
   });
 
+  const [selectedEstudiante, setSelectedEstudiante] = useState(null);
+  const [selectedSeccion, setSelectedSeccion] = useState(null);
+
   useEffect(() => {
     const fetchMatriculas = async () => {
-        try{
-            const data = await getMatriculas();
-            setMatriculas(data);
-        } catch (error){
-            console.error('Error al obtener matriculas')
-        }
+      try {
+        const data = await getMatriculas();
+        setMatriculas(data);
+      } catch (error) {
+        console.error('Error al obtener matriculas', error);
+      }
     };
 
-    const fetchAlumnoTipos = async () => {
-        try {
-          const data = await getAlumnos();
-          setAlumnoTipos(data);
-        } catch (error) {
-          console.error('Error al obtener los alumnos:', error);
-        }
-      };
-
-    const fetchApoderadoTipos = async () => {
-        try {
-            const data = await getApoderados();
-            setApoderadoTipos(data);
-        }catch(error){
-            console.error('Error al obtener los tipos de apoderados: ', error);
-        }
+    const fetchEstudianteTipos = async () => {
+      try {
+        const data = await getEstudiantes();
+        setEstudianteTipos(data);
+      } catch (error) {
+        console.error('Error al obtener los alumnos:', error);
+      }
     };
 
     const fetchSeccionTipos = async () => {
-        try {
-          const data = await getSeccion();
-          setSeccionTipos(data);
-        } catch (error) {
-          console.error('Error al obtener las secciones:', error);
-        }
-      };
+      try {
+        const data = await getSecciones();
+        setSeccionTipos(data);
+      } catch (error) {
+        console.error('Error al obtener las secciones:', error);
+      }
+    };
 
-      fetchMatriculas();
-      fetchApoderadoTipos();
-      fetchAlumnoTipos();
-      fetchSeccionTipos();
+    fetchMatriculas();
+    fetchEstudianteTipos();
+    fetchSeccionTipos();
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    const newValue = name === 'a' ? parseInt(value, 10) : name === 'a' ? parseInt(value, 10) : value;
+  const handleChangeEstudiante = (e) => {
+    const estudianteId = e.target.value;
+    setSelectedEstudiante(estudianteTipos.find(estudiante => estudiante.estudiante_id === estudianteId));
     setFormData({
-        ...formData,
-        [name]: newValue,
-      });
+      ...formData,
+      estudiante_id: estudianteId,
+    });
+  };
+
+  const handleChangeSeccion = (e) => {
+    const seccionId = e.target.value;
+    setSelectedSeccion(seccionTipos.find(seccion => seccion.seccion_id === seccionId));
+    setFormData({
+      ...formData,
+      seccion_id: seccionId,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -104,20 +96,22 @@ const FormAddMatricula = () => {
 
       if (response) {
         Swal.fire({
-          title: "Creación Exitosa!",
-          text: "Matricula creada exitosamente",
-          icon: "success"
+          title: 'Creación Exitosa!',
+          text: 'Matricula creada exitosamente',
+          icon: 'success',
         }).then(() => {
-          // Redireccionar al listado de alumnos
-          window.location.href ="/Matricula";
+          // Redireccionar al listado de matriculas
+          window.location.href = '/Matricula';
         });
       }
     } catch (error) {
       console.error('Error al crear la matricula:', error);
-
-      // Aquí puedes mostrar un mensaje de error al usuario
+      // Mostrar mensaje de error al usuario si es necesario
     }
   };
+
+  const currentYear = new Date().getFullYear().toString();
+  const filteredSeccionTipos = seccionTipos.filter(seccion => seccion.periodo?.año === currentYear);
 
   return (
     <Card>
@@ -132,65 +126,62 @@ const FormAddMatricula = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth name='periodo_academico' label='Periodo Academico' placeholder='2024' value={formData.periodo_academico} onChange={handleChange} required />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Numero Matricula' placeholder='0000001' name="numero_matricula" value={formData.numero_matricula} onChange={handleChange} required />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Observaciones' placeholder='Ninguna' name="observaciones" value={formData.observaciones} onChange={handleChange} required />
-            </Grid>
-            <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
-                <InputLabel id='Docentes-layouts-separator-select-label'>Alumno</InputLabel>
+                <InputLabel id='estado-label'>Estado</InputLabel>
                 <Select
-                  label='Alumno'
-                  defaultValue=''
-                  id='form-layouts-separator-select'
-                  labelId='form-layouts-separator-select-label'
-                  name="alumno_id" value={formData.alumno_id} onChange={handleChange} required
+                  label='Estado'
+                  defaultValue='Pendiente'
+                  id='estado-select'
+                  labelId='estado-label'
+                  name='estado'
+                  value={formData.estado}
+                  onChange={(e) => setFormData({ ...formData, estado: e.target.value })}
+                  required
                 >
-                    {alumnoTipos.map((tipoAlumno) => (
-                    <MenuItem key={tipoAlumno.alumno_id} value={tipoAlumno.alumno_id}>
-                      {tipoAlumno.nombres_alumno}
-
-                    </MenuItem>))}
+                  <MenuItem value='Pendiente'>Pendiente</MenuItem>
+                  <MenuItem value='Pagado'>Pagado</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
-                <InputLabel id='Docentes-layouts-separator-select-label'>Apoderado</InputLabel>
+                <InputLabel id='apoderado-label'>Tipo de Alumno</InputLabel>
                 <Select
-                  label='Apoderado'
+                  label='Tipo de Alumno'
                   defaultValue=''
-                  id='form-layouts-separator-select'
-                  labelId='form-layouts-separator-select-label'
-                  name="apoderado_id" value={formData.apoderado_id} onChange={handleChange} required
+                  id='apoderado-select'
+                  labelId='apoderado-label'
+                  name='estudiante_id'
+                  value={formData.estudiante_id}
+                  onChange={handleChangeEstudiante}
+                  required
                 >
-                    {apoderadoTipos.map((tipoApoderado) => (
-                    <MenuItem key={tipoApoderado.apoderado_id} value={tipoApoderado.apoderado_id}>
-                      {tipoApoderado.nombres_apoderado}
-
-                    </MenuItem>))}
+                  {estudianteTipos.map((tipoEstudiante) => (
+                    <MenuItem key={tipoEstudiante.estudiante_id} value={tipoEstudiante.estudiante_id}>
+                      {`${tipoEstudiante.nombre} ${tipoEstudiante.apellido}`}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
-                <InputLabel id='Docentes-layouts-separator-select-label'>Seccion</InputLabel>
+                <InputLabel id='seccion-label'>Salón</InputLabel>
                 <Select
-                  label='Tipo de Apoderado'
+                  label='Salon'
                   defaultValue=''
-                  id='form-layouts-separator-select'
-                  labelId='form-layouts-separator-select-label'
-                  name="seccion_id" value={formData.seccion_id} onChange={handleChange} required
+                  id='seccion-select'
+                  labelId='seccion-label'
+                  name='seccion_id'
+                  value={formData.seccion_id}
+                  onChange={handleChangeSeccion}
+                  required
                 >
-                    {seccionTipos.map((tipoSeccion) => (
-                    <MenuItem key={tipoSeccion.seccion_id} value={tipoSeccion.seccion_id}>
-                      {tipoSeccion.nombre_seccion}
-
-                    </MenuItem>))}
+                  {selectedEstudiante && selectedEstudiante.seccion && (
+                    <MenuItem key={selectedEstudiante.seccion.seccion_id} value={selectedEstudiante.seccion.seccion_id}>
+                      {`${selectedEstudiante.seccion.nombre} - ${selectedEstudiante.seccion.grado?.nombre || 'N/A'} - ${selectedEstudiante.seccion.periodo?.año}`}
+                    </MenuItem>
+                  )}
                 </Select>
               </FormControl>
             </Grid>
@@ -201,17 +192,16 @@ const FormAddMatricula = () => {
           <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
             Realizar Matricula
           </Button>
-          <Link href="/Matricula" passHref>
-          <Button size='large' color='secondary' variant='outlined'>
-          
-            Cancelar
-          </Button>
+          <Link href='/Matricula' passHref>
+            <Button size='large' color='secondary' variant='outlined'>
+              Cancelar
+            </Button>
           </Link>
         </CardActions>
       </form>
     </Card>
-  )
-}
+  );
+};
 
-export default FormAddMatricula
+export default FormAddMatricula;
 
