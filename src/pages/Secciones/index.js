@@ -12,9 +12,9 @@ const GrTable = () => {
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Typography variant='h5' color="#9155FD">
-            Secciones
+            Salones
         </Typography>
-        <Typography variant='body2'>Gestionar Secciones</Typography>
+        <Typography variant='body2'>Gestionar Salones</Typography>
       </Grid>
       <Grid item xs={12}>
           <SeccionTable/>

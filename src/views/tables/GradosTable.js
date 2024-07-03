@@ -42,9 +42,9 @@ const GradosTable = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await deleteCursos(id);
-          const updateCurso = cursos.filter((cursos) => cursos.id !== id);
-          setGrados(updateCurso);
+          await deletegrados(id);
+          const updateGrado = grados.filter((grados) => grados.id !== id);
+          setGrados(updateGrado);
           Swal.fire({
             title: "¡Eliminado!",
             text: "Tu grado ha sido eliminado.",

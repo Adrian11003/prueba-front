@@ -40,8 +40,8 @@ const SeccionTable = () => {
       if (result.isConfirmed) {
         try {
           await deleteSeccion(id);
-          const updatedSeccion = seccion.filter((seccion) => seccion.id !== id);
-          setSeccion(updatedSeccion);
+          const updateSeccion = seccion.filter((seccion) => seccion.id !== id);
+          setSeccion(updateSeccion);
           Swal.fire({
             title: '¡Eliminado!',
             text: 'Tu seccion ha sido eliminado.',
@@ -127,10 +127,8 @@ const SeccionTable = () => {
                   <Table aria-label="simple table">
                     <TableHead>
                       <TableRow>
-                        <TableCell>Nombre</TableCell>
+                        <TableCell>Sección</TableCell>
                         <TableCell>Aula</TableCell>
-                        <TableCell>Grado</TableCell>
-                        <TableCell>Periodo</TableCell>
                         <TableCell>Acción</TableCell>
                       </TableRow>
                     </TableHead>
@@ -139,8 +137,6 @@ const SeccionTable = () => {
                         <TableRow key={seccion.seccion_id}>
                           <TableCell>{seccion.nombre}</TableCell>
                           <TableCell>{seccion.aula}</TableCell>
-                          <TableCell>{seccion.grado.nombre}</TableCell>
-                          <TableCell>{seccion.periodo.año}</TableCell>
                           <TableCell>
                             <IconButton>
                               <Link href={`/Secciones/${seccion.seccion_id}`} passHref>

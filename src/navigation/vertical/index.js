@@ -45,9 +45,9 @@ const navigation = () => {
       path: '/Docentes'
     },
     {
-      icon: iconos.LibraryOutline,
-      title: 'Aulas',
-      path: '/Aulas'
+      icon: iconos.AlphabeticalVariant,
+      title: 'Salones',
+      path: '/Secciones'
     },
     {
       icon: iconos.Numeric,
@@ -64,10 +64,11 @@ const navigation = () => {
       title: 'Matricula',
       path: '/Matricula'
     },
+ 
     {
-      icon: iconos.AlphabeticalVariant,
-      title: 'Secciones',
-      path: '/Secciones'
+      icon: iconos.LibraryOutline,
+      title: 'Aulas',
+      path: '/Aulas'
     },
 
     // {

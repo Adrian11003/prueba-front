@@ -117,10 +117,10 @@ const FormAddSeccion = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='1-A' placeholder='Ninguna' name="nombre" value={formData.nombre} onChange={handleChange} required />
+              <TextField fullWidth label='Nombre' placeholder='A' name="nombre" value={formData.nombre} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='B402' placeholder='Ninguna' name="aula" value={formData.aula} onChange={handleChange} required />
+              <TextField fullWidth label='Aula' placeholder='102' name="aula" value={formData.aula} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
@@ -165,7 +165,7 @@ const FormAddSeccion = () => {
           <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
             Crear Sección
           </Button>
-          <Link href="/Periodos" passHref>
+          <Link href="/Secciones" passHref>
             <Button size='large' color='secondary' variant='outlined'>
               Cancelar
             </Button>

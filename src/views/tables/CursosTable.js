@@ -107,6 +107,7 @@ const CursosTable = () => {
           <TableHead >
             <TableRow >
               <TableCell>Nombre</TableCell>
+              <TableCell>Acción</TableCell>
             </TableRow>
           </TableHead>
           <TableBody >
