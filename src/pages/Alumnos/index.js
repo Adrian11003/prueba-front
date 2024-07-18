@@ -26,4 +26,5 @@ const MUITable = () => {
   )
 }
 
+
 export default MUITable
